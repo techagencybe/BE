@@ -44,8 +44,9 @@ export async function bookCall(formData: FormData) {
       },
     });
 
-    // Trigger both emails in parallel (allSettled ensures we don't crash if one fails)
-    Promise.allSettled([
+    // Await both emails (parallel). In serverless (Vercel), we MUST await or the process may be killed before sending.
+    // The 5s timeout in mailer.ts ensures this doesn't hang forever.
+    await Promise.allSettled([
       sendEmail({
         to: email,
         subject: "Your BE. Agency Call Request",
@@ -56,13 +57,7 @@ export async function bookCall(formData: FormData) {
         subject: `New Booking Request from ${name}`,
         html: adminNotificationTemplate("Call Booking", { name, email, company }),
       })
-    ]).then(results => {
-      results.forEach((res, i) => {
-        if (res.status === 'rejected') {
-          console.error(`Email ${i === 0 ? 'User' : 'Admin'} failed:`, res.reason);
-        }
-      });
-    });
+    ]);
 
     return { success: true };
   } catch (error) {
@@ -87,8 +82,8 @@ export async function startProject(formData: FormData) {
       },
     });
 
-    // Trigger both emails in parallel (non-blocking)
-    Promise.allSettled([
+    // Await both emails (parallel) for Vercel compatibility
+    await Promise.allSettled([
       sendEmail({
         to: email,
         subject: "Your BE. Agency Project Inquiry",
@@ -99,13 +94,7 @@ export async function startProject(formData: FormData) {
         subject: `New Project Inquiry from ${name}`,
         html: adminNotificationTemplate("Project Inquiry", { name, email, type, details }),
       })
-    ]).then(results => {
-      results.forEach((res, i) => {
-        if (res.status === 'rejected') {
-          console.error(`Email ${i === 0 ? 'User' : 'Admin'} failed:`, res.reason);
-        }
-      });
-    });
+    ]);
 
     return { success: true };
   } catch (error) {
@@ -133,8 +122,8 @@ export async function subscribeNewsletter(formData: FormData) {
       },
     });
 
-    // Trigger both emails in parallel (non-blocking)
-    Promise.allSettled([
+    // Await both emails (parallel) for Vercel compatibility
+    await Promise.allSettled([
       sendEmail({
         to: email,
         subject: "Welcome to BE. Labs Newsletter",
@@ -150,13 +139,7 @@ export async function subscribeNewsletter(formData: FormData) {
         subject: `New Newsletter Subscriber`,
         html: `<p>New subscriber: ${email}</p>`,
       })
-    ]).then(results => {
-      results.forEach((res, i) => {
-        if (res.status === 'rejected') {
-          console.error(`Email ${i === 0 ? 'User' : 'Admin'} failed:`, res.reason);
-        }
-      });
-    });
+    ]);
 
     return { success: true };
   } catch (error) {
