@@ -1,11 +1,13 @@
 import { getCaseStudyBySlug } from "@/app/actions/case-studies";
 import { notFound } from "next/navigation";
 import Navbar from "@/components/layout/Navbar";
+import Footer from "@/components/layout/Footer";
 import { ArrowLeft, Globe, Smartphone, Bot } from "lucide-react";
 import Link from "next/link";
 
-export default async function CaseStudyPage({ params }: { params: { slug: string } }) {
-  const res = await getCaseStudyBySlug(params.slug);
+export default async function CaseStudyPage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  const res = await getCaseStudyBySlug(slug);
   
   if (!res.success || !res.data) {
     notFound();
@@ -17,12 +19,12 @@ export default async function CaseStudyPage({ params }: { params: { slug: string
     <main className="min-h-screen bg-white text-black pt-32 pb-24">
       <Navbar forceTheme="dark" />
       
-      <div className="max-w-4xl mx-auto px-6">
+      <div className="max-w-4xl mx-auto px-6 mb-24">
         <Link href="/work" className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-black/40 hover:text-black transition-colors mb-12">
           <ArrowLeft size={14} /> Back to Work
         </Link>
 
-        {/* Header */}
+        {/* ... existing header ... */}
         <header className="mb-16">
           <div className="flex items-center gap-3 mb-6">
             <span className="px-3 py-1.5 rounded-lg bg-black/[0.03] text-[10px] font-black uppercase tracking-widest text-black/60 border border-black/[0.04]">
@@ -42,14 +44,14 @@ export default async function CaseStudyPage({ params }: { params: { slug: string
           </p>
         </header>
 
-        {/* Hero Image */}
+        {/* ... existing hero image ... */}
         {study.image && (
           <div className="w-full h-[40vh] md:h-[60vh] rounded-3xl overflow-hidden mb-16 border border-black/[0.05] bg-black/5">
             <img src={study.image} alt={study.title} className="w-full h-full object-cover" />
           </div>
         )}
 
-        {/* Meta Info */}
+        {/* ... existing meta info ... */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 mb-16 p-8 bg-[#F7F8FA] rounded-3xl border border-black/[0.05]">
           <div>
             <h3 className="text-xs font-black uppercase tracking-widest text-black/30 mb-4">Results</h3>
@@ -79,6 +81,8 @@ export default async function CaseStudyPage({ params }: { params: { slug: string
           <div dangerouslySetInnerHTML={{ __html: study.content }} />
         </div>
       </div>
+
+      <Footer />
     </main>
   );
 }

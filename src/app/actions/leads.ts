@@ -44,18 +44,24 @@ export async function bookCall(formData: FormData) {
       },
     });
 
-    // Send confirmation to User
-    await sendEmail({
-      to: email,
-      subject: "Your BE. Agency Call Request",
-      html: userConfirmationTemplate(name, "We've received your call request!"),
-    });
-
-    // Send alert to Admin
-    await sendEmail({
-      to: adminEmail,
-      subject: `New Booking Request from ${name}`,
-      html: adminNotificationTemplate("Call Booking", { name, email, company }),
+    // Trigger both emails in parallel (allSettled ensures we don't crash if one fails)
+    Promise.allSettled([
+      sendEmail({
+        to: email,
+        subject: "Your BE. Agency Call Request",
+        html: userConfirmationTemplate(name, "We've received your call request!"),
+      }),
+      sendEmail({
+        to: adminEmail,
+        subject: `New Booking Request from ${name}`,
+        html: adminNotificationTemplate("Call Booking", { name, email, company }),
+      })
+    ]).then(results => {
+      results.forEach((res, i) => {
+        if (res.status === 'rejected') {
+          console.error(`Email ${i === 0 ? 'User' : 'Admin'} failed:`, res.reason);
+        }
+      });
     });
 
     return { success: true };
@@ -81,18 +87,24 @@ export async function startProject(formData: FormData) {
       },
     });
 
-    // Send confirmation to User
-    await sendEmail({
-      to: email,
-      subject: "Your BE. Agency Project Inquiry",
-      html: userConfirmationTemplate(name, "We've received your project details!"),
-    });
-
-    // Send alert to Admin
-    await sendEmail({
-      to: adminEmail,
-      subject: `New Project Inquiry from ${name}`,
-      html: adminNotificationTemplate("Project Inquiry", { name, email, type, details }),
+    // Trigger both emails in parallel (non-blocking)
+    Promise.allSettled([
+      sendEmail({
+        to: email,
+        subject: "Your BE. Agency Project Inquiry",
+        html: userConfirmationTemplate(name, "We've received your project details!"),
+      }),
+      sendEmail({
+        to: adminEmail,
+        subject: `New Project Inquiry from ${name}`,
+        html: adminNotificationTemplate("Project Inquiry", { name, email, type, details }),
+      })
+    ]).then(results => {
+      results.forEach((res, i) => {
+        if (res.status === 'rejected') {
+          console.error(`Email ${i === 0 ? 'User' : 'Admin'} failed:`, res.reason);
+        }
+      });
     });
 
     return { success: true };
@@ -121,23 +133,29 @@ export async function subscribeNewsletter(formData: FormData) {
       },
     });
 
-    // Confirmation to user
-    await sendEmail({
-      to: email,
-      subject: "Welcome to BE. Labs Newsletter",
-      html: `
-        <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; color: #111;">
-          <h2>Welcome to BE. Labs</h2>
-          <p>Thanks for subscribing. We'll send you our latest insights on engineering, design, and growth.</p>
-        </div>
-      `,
-    });
-
-    // Notification to admin
-    await sendEmail({
-      to: adminEmail,
-      subject: `New Newsletter Subscriber`,
-      html: `<p>New subscriber: ${email}</p>`,
+    // Trigger both emails in parallel (non-blocking)
+    Promise.allSettled([
+      sendEmail({
+        to: email,
+        subject: "Welcome to BE. Labs Newsletter",
+        html: `
+          <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; color: #111;">
+            <h2>Welcome to BE. Labs</h2>
+            <p>Thanks for subscribing. We'll send you our latest insights on engineering, design, and growth.</p>
+          </div>
+        `,
+      }),
+      sendEmail({
+        to: adminEmail,
+        subject: `New Newsletter Subscriber`,
+        html: `<p>New subscriber: ${email}</p>`,
+      })
+    ]).then(results => {
+      results.forEach((res, i) => {
+        if (res.status === 'rejected') {
+          console.error(`Email ${i === 0 ? 'User' : 'Admin'} failed:`, res.reason);
+        }
+      });
     });
 
     return { success: true };

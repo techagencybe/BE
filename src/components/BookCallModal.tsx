@@ -139,7 +139,7 @@ export default function BookCallModal({ isOpen, onClose }: { isOpen: boolean; on
                   </div>
                   <div>
                     <h2 className="text-[14px] md:text-[15px] font-black text-black tracking-tight leading-tight">Book a Call</h2>
-                    <p className="text-[10px] md:text-[11px] text-black/40">BE. Software Agency</p>
+                    <p className="text-[10px] md:text-[11px] text-black/40">BE. Tech Agency</p>
                   </div>
                 </div>
                 <button

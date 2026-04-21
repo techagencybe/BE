@@ -9,9 +9,9 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "BE. — Software Agency",
+  title: "BE. — Tech Agency",
   description: "We build high-performance web & mobile applications for startups, scale-ups, and enterprises. Zero compromises on quality.",
-  keywords: ["software agency", "web development", "mobile apps", "UI/UX design", "Next.js", "React"],
+  keywords: ["tech agency", "web development", "mobile apps", "UI/UX design", "Next.js", "React"],
 };
 
 export default function RootLayout({

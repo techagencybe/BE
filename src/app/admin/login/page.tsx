@@ -44,7 +44,7 @@ export default function AdminLogin() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-6">
+    <div className="min-h-screen bg-[#050505] flex items-center justify-center p-6 text-white">
       <div className="w-full max-w-md bg-[#0A0A0A] border border-white/10 p-8 rounded-3xl shadow-2xl">
         <h1 className="text-2xl font-black mb-2">Admin Login</h1>
         <p className="text-white/40 text-sm mb-6">Welcome back to BE. Agency.</p>

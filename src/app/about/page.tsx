@@ -19,6 +19,7 @@ import {
 } from "lucide-react";
 import BookCallModal from "@/components/BookCallModal";
 import Navbar from "@/components/layout/Navbar";
+import Footer from "@/components/layout/Footer";
 
 const ease = [0.16, 1, 0.3, 1] as [number, number, number, number];
 
@@ -444,33 +445,33 @@ export default function AboutPage() {
       {/* ══════════════════════════════════════════
           APPROACH STRIP
       ══════════════════════════════════════════ */}
-      <section className="py-24 bg-[#F8F9FA] border-y border-black/[0.04] px-6">
+      <section className="py-24 bg-[#050505] border-y border-white/5 px-6">
         <div className="max-w-[1400px] mx-auto grid grid-cols-1 md:grid-cols-3 gap-16 md:gap-10">
           <FadeUp className="flex items-center gap-6">
-            <div className="w-14 h-14 rounded-2xl bg-white shadow-sm flex items-center justify-center flex-shrink-0">
+            <div className="w-14 h-14 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center flex-shrink-0">
               <CheckCircle2 className="text-[#00BAFF]" size={28} />
             </div>
             <div>
-              <h4 className="text-[16px] font-black text-black uppercase tracking-tight mb-1">Remote First</h4>
-              <p className="text-[13px] text-black/40 font-medium">Distributed excellence across time zones.</p>
+              <h4 className="text-[16px] font-black text-white uppercase tracking-tight mb-1">Remote First</h4>
+              <p className="text-[13px] text-white/40 font-medium">Distributed excellence across time zones.</p>
             </div>
           </FadeUp>
           <FadeUp delay={0.1} className="flex items-center gap-6">
-            <div className="w-14 h-14 rounded-2xl bg-white shadow-sm flex items-center justify-center flex-shrink-0">
+            <div className="w-14 h-14 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center flex-shrink-0">
               <ShieldCheck className="text-[#00BAFF]" size={28} />
             </div>
             <div>
-              <h4 className="text-[16px] font-black text-black uppercase tracking-tight mb-1">Agile Logic</h4>
-              <p className="text-[13px] text-black/40 font-medium">Weekly iterations, zero surprises.</p>
+              <h4 className="text-[16px] font-black text-white uppercase tracking-tight mb-1">Agile Logic</h4>
+              <p className="text-[13px] text-white/40 font-medium">Weekly iterations, zero surprises.</p>
             </div>
           </FadeUp>
           <FadeUp delay={0.2} className="flex items-center gap-6">
-            <div className="w-14 h-14 rounded-2xl bg-white shadow-sm flex items-center justify-center flex-shrink-0">
+            <div className="w-14 h-14 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center flex-shrink-0">
               <MessageSquare className="text-[#00BAFF]" size={28} />
             </div>
             <div>
-              <h4 className="text-[16px] font-black text-black uppercase tracking-tight mb-1">Partner Focused</h4>
-              <p className="text-[13px] text-black/40 font-medium">Direct access to our senior leadership.</p>
+              <h4 className="text-[16px] font-black text-white uppercase tracking-tight mb-1">Partner Focused</h4>
+              <p className="text-[13px] text-white/40 font-medium">Direct access to our senior leadership.</p>
             </div>
           </FadeUp>
         </div>
@@ -504,17 +505,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <footer className="bg-[#050505] text-white py-16 px-6 border-t border-white/[0.06]">
-        <div className="max-w-[1400px] mx-auto flex flex-col md:flex-row justify-between items-center gap-10">
-          <div className="text-[24px] font-black tracking-tighter">BE<span className="text-[#00BAFF]">.</span></div>
-          <div className="text-[13px] text-white/30 font-medium text-center md:text-left">© {new Date().getFullYear()} BE. Agency. High-Performance Software.</div>
-          <div className="flex gap-10 text-[13px] font-black uppercase tracking-[0.25em] text-white/40">
-            <a href="#" className="hover:text-white transition-colors">Twitter</a>
-            <a href="#" className="hover:text-white transition-colors">LinkedIn</a>
-            <a href="#" className="hover:text-white transition-colors">Dribbble</a>
-          </div>
-        </div>
-      </footer>
+      <Footer />
 
       <BookCallModal isOpen={bookCallOpen} onClose={() => setBookCallOpen(false)} />
     </main>

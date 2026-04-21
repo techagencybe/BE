@@ -11,6 +11,7 @@ import {
   Rocket,
 } from "lucide-react";
 import Navbar from "@/components/layout/Navbar";
+import Footer from "@/components/layout/Footer";
 import BookCallModal from "@/components/BookCallModal";
 import { startProject } from "@/app/actions/leads";
 
@@ -213,23 +214,7 @@ export default function StartProjectPage() {
       </div>
       </main>
 
-      {/* Footer */}
-      <footer className="bg-white border-t border-black/[0.05] px-6 py-12">
-        <div className="max-w-[1400px] mx-auto flex flex-col md:flex-row items-center justify-between gap-6 text-black">
-          <div className="flex items-center gap-1">
-            <span className="text-lg font-black tracking-tight uppercase">BE</span>
-            <span className="text-lg font-black text-[#00BAFF]">.</span>
-          </div>
-          <p className="text-[12px] text-black/25">
-            © {new Date().getFullYear()} BE. All rights reserved.
-          </p>
-          <div className="flex items-center gap-6 text-[12px] text-black/35 font-semibold">
-            <a href="#" className="hover:text-black transition-colors">RSS Feed</a>
-            <a href="#" className="hover:text-black transition-colors">Newsletter</a>
-            <a href="mailto:hello@be.agency" className="hover:text-[#00BAFF] transition-colors">Contact</a>
-          </div>
-        </div>
-      </footer>
+      <Footer />
 
       <BookCallModal isOpen={bookCallOpen} onClose={() => setBookCallOpen(false)} />
     </>
