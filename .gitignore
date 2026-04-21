@@ -39,3 +39,18 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# scratch
+scratch/
+
+# AI Indicators
+AGENTS.md
+CLAUDE.md
+.cursorrules
+.windsurfrules
+.aie
+.aieignore
+.gemini/
+.ai/
+*.ai.md
+ai-notes.md
