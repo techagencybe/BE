@@ -165,53 +165,56 @@ export default function BlogPage() {
       {featuredPost && (
         <section className="py-12 bg-white">
           <div className="max-w-[1400px] mx-auto px-6">
-            <FadeUp>
-              <a href={`/blog/${featuredPost.id}`} className="group relative block rounded-3xl overflow-hidden bg-black aspect-[21/9]">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.98 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, ease }}
+            >
+              <a href={`/blog/${featuredPost.id}`} className="group relative block rounded-[40px] overflow-hidden bg-black aspect-[16/9] md:aspect-[21/8]">
                 {/* Image */}
                 <img 
                   src={featuredPost.image} 
                   alt={featuredPost.title} 
-                  className="w-full h-full object-cover opacity-60 group-hover:opacity-80 group-hover:scale-105 transition-all duration-700"
+                  className="w-full h-full object-cover opacity-50 group-hover:opacity-70 group-hover:scale-105 transition-all duration-1000"
                   style={{ objectPosition: "center" }}
-                />
-                {/* Diagonal overlay */}
-                <div 
-                  className="absolute inset-0 opacity-20 pointer-events-none"
-                  style={{ backgroundImage: "repeating-linear-gradient(135deg, transparent, transparent 20px, rgba(255,255,255,0.1) 20px, rgba(255,255,255,0.1) 21px)" }}
                 />
                 
                 {/* Content Overlay */}
-                <div className="absolute inset-0 p-8 md:p-16 flex flex-col justify-end bg-gradient-to-t from-black via-black/40 to-transparent">
-                  <div className="max-w-2xl">
-                    <div className="flex items-center gap-4 mb-6">
-                      <span className="px-3 py-1.5 rounded-lg bg-[#00BAFF] text-[10px] font-black uppercase tracking-widest text-white shadow-[0_0_20px_rgba(0,186,255,0.4)]">
-                        Featured
+                <div className="absolute inset-0 p-8 md:p-20 flex flex-col justify-end bg-gradient-to-t from-black via-black/40 to-transparent">
+                  <div className="max-w-3xl">
+                    <div className="flex items-center gap-4 mb-8">
+                      <span className="px-4 py-2 rounded-xl bg-[#00BAFF] text-[10px] md:text-[11px] font-black uppercase tracking-widest text-white shadow-[0_0_30px_rgba(0,186,255,0.4)]">
+                        Featured Insight
                       </span>
-                      <span className="text-[12px] font-bold text-white/60">{featuredPost.category}</span>
+                      <span className="text-[12px] md:text-[14px] font-bold text-white/60 tracking-wide">{featuredPost.category}</span>
                     </div>
-                    <h2 className="text-[clamp(28px,4vw,48px)] font-black text-white leading-[1.1] tracking-tight mb-6 group-hover:text-[#00BAFF] transition-colors">
+                    <h2 className="text-[clamp(32px,5vw,64px)] font-black text-white leading-[1] tracking-tight mb-8 group-hover:text-[#00BAFF] transition-colors duration-500">
                       {featuredPost.title}
                     </h2>
-                    <p className="text-[16px] text-white/50 leading-relaxed mb-8 hidden md:block">
+                    <p className="text-[16px] md:text-[20px] text-white/60 leading-relaxed mb-10 hidden md:block max-w-2xl">
                       {featuredPost.excerpt}
                     </p>
-                    <div className="flex items-center gap-6">
-                      <div className="flex items-center gap-2 text-[12px] font-bold text-white">
-                        <User size={14} className="text-[#00BAFF]" /> {featuredPost.author}
+                    <div className="flex items-center gap-8">
+                      <div className="flex items-center gap-3 text-[13px] md:text-[15px] font-bold text-white">
+                        <div className="w-10 h-10 rounded-full bg-[#00BAFF]/20 flex items-center justify-center text-[#00BAFF]">
+                          {featuredPost.author[0]}
+                        </div>
+                        {featuredPost.author}
                       </div>
-                      <div className="flex items-center gap-2 text-[12px] font-bold text-white/40">
-                        <Clock size={14} /> {featuredPost.readTime}
+                      <div className="flex items-center gap-2 text-[13px] md:text-[15px] font-bold text-white/40">
+                        <Clock size={16} /> {featuredPost.readTime}
                       </div>
                     </div>
                   </div>
                 </div>
                 
                 {/* Hover arrow */}
-                <div className="absolute top-10 right-10 w-14 h-14 rounded-full bg-white flex items-center justify-center opacity-0 group-hover:opacity-100 group-hover:translate-x-0 translate-x-4 transition-all duration-500">
-                  <ArrowUpRight size={24} className="text-black" />
+                <div className="absolute top-10 right-10 w-20 h-20 rounded-full bg-white flex items-center justify-center opacity-0 group-hover:opacity-100 group-hover:translate-x-0 translate-x-10 transition-all duration-700 shadow-2xl">
+                  <ArrowUpRight size={32} className="text-black" />
                 </div>
               </a>
-            </FadeUp>
+            </motion.div>
           </div>
         </section>
       )}

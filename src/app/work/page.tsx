@@ -177,7 +177,7 @@ export default function WorkPage() {
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
             transition={{ delay: 0.45, duration: 0.6 }}
-            className="text-[17px] text-white/45 max-w-xl mx-auto mb-12 leading-relaxed"
+            className="text-[15px] md:text-[17px] text-white/45 max-w-xl mx-auto mb-10 md:mb-12 leading-relaxed px-4 md:px-0"
           >
             We don&apos;t just build features; we solve business problems. 
             Explore how we&apos;ve helped our clients scale with high-performance 
@@ -190,13 +190,13 @@ export default function WorkPage() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.6, duration: 0.5 }}
-            className="flex flex-wrap items-center justify-center gap-3"
+            className="flex flex-wrap items-center justify-center gap-2 md:gap-3"
           >
             {CATEGORIES.map((cat) => (
               <button
                 key={cat}
                 onClick={() => setActiveFilter(cat)}
-                className={`px-6 py-2 rounded-full text-[12px] font-black uppercase tracking-wider transition-all duration-300 ${
+                className={`px-5 md:px-6 py-2 rounded-full text-[11px] md:text-[12px] font-black uppercase tracking-wider transition-all duration-300 ${
                   activeFilter === cat
                     ? "bg-[#00BAFF] text-white shadow-[0_0_20px_rgba(0,186,255,0.4)]"
                     : "bg-white/[0.05] text-white/40 hover:bg-white/[0.1] hover:text-white"
@@ -231,9 +231,9 @@ export default function WorkPage() {
                     transition={{ duration: 0.5, delay: i * 0.05, ease }}
                     className="group"
                   >
-                  <div className="relative rounded-3xl overflow-hidden border border-black/[0.07] bg-[#F7F8FA] transition-all duration-500 hover:border-[#00BAFF]/30 hover:shadow-2xl">
+                  <div className="relative rounded-2xl md:rounded-3xl overflow-hidden border border-black/[0.07] bg-[#F7F8FA] transition-all duration-500 hover:border-[#00BAFF]/30 hover:shadow-2xl">
                     {/* Visual Area */}
-                    <div className="relative h-80 overflow-hidden bg-black">
+                    <div className="relative h-64 md:h-80 overflow-hidden bg-black">
                       {/* Diagonal pattern overlay */}
                       <div
                         aria-hidden
@@ -272,16 +272,16 @@ export default function WorkPage() {
                     </div>
 
                     {/* Info Area */}
-                    <div className="p-10 bg-white relative">
+                    <div className="p-6 md:p-10 bg-white relative">
                       <div className="flex flex-col md:flex-row justify-between items-start gap-6">
                         <div className="flex-1">
-                          <span className="text-[11px] font-bold text-[#00BAFF] uppercase tracking-widest block mb-2">
+                          <span className="text-[10px] md:text-[11px] font-bold text-[#00BAFF] uppercase tracking-widest block mb-2">
                             {p.client}
                           </span>
-                          <h3 className="text-[32px] font-black text-black tracking-tighter leading-tight mb-4 group-hover:text-[#00BAFF] transition-colors duration-300">
+                          <h3 className="text-2xl md:text-[32px] font-black text-black tracking-tighter leading-tight mb-4 group-hover:text-[#00BAFF] transition-colors duration-300">
                             {p.title}
                           </h3>
-                          <p className="text-[15px] text-black/55 leading-relaxed mb-8 max-w-md">
+                          <p className="text-[14px] md:text-[15px] text-black/55 leading-relaxed mb-6 md:mb-8 max-w-md">
                             {p.desc}
                           </p>
 
@@ -310,9 +310,9 @@ export default function WorkPage() {
                       </div>
 
                       {/* Footer */}
-                      <div className="mt-10 pt-8 border-t border-black/[0.06] flex items-center justify-between">
-                        <a href={`/work/${p.id}`} className="flex items-center gap-2 text-[12px] font-black uppercase tracking-wider text-black group-hover:text-[#00BAFF] transition-colors">
-                          View full case study <ChevronRight size={14} />
+                      <div className="mt-8 md:mt-10 pt-6 md:pt-8 border-t border-black/[0.06] flex items-center justify-between">
+                        <a href={`/work/${p.id}`} className="flex items-center gap-2 text-[11px] md:text-[12px] font-black uppercase tracking-wider text-black group-hover:text-[#00BAFF] transition-colors">
+                          Full Case Study <ChevronRight size={14} />
                         </a>
                         <div className="flex items-center gap-2">
                           {p.category === "Web" && <Globe size={14} className="text-black/30" />}

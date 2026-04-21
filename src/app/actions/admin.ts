@@ -144,3 +144,18 @@ export async function getLeads() {
     return { success: false, error: "Failed to fetch leads" };
   }
 }
+
+export async function deleteLead(id: string) {
+  const session = await getSession();
+  if (!session) return { success: false, error: "Unauthorized" };
+
+  try {
+    await db.lead.delete({
+      where: { id },
+    });
+    return { success: true };
+  } catch (error) {
+    console.error("Error deleting lead:", error);
+    return { success: false, error: "Failed to delete lead" };
+  }
+}

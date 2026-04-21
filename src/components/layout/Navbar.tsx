@@ -16,6 +16,8 @@ import {
   Layers,
   ArrowRight,
   PhoneCall,
+  Menu,
+  X,
 } from "lucide-react";
 import BookCallModal from "@/components/BookCallModal";
 
@@ -97,6 +99,7 @@ export default function Navbar({ forceTheme }: { forceTheme?: "light" | "dark" }
   const [scrolled, setScrolled] = useState(false);
   const [pastHero, setPastHero] = useState(false);
   const [bookCallOpen, setBookCallOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   let closeTimeout: ReturnType<typeof setTimeout>;
 
   useEffect(() => {
@@ -130,15 +133,15 @@ export default function Navbar({ forceTheme }: { forceTheme?: "light" | "dark" }
   return (
     <>
     <nav
-      className={`fixed top-0 w-full z-[100] transition-all duration-500 ${
+      className={`fixed top-0 left-0 right-0 w-full z-[100] transition-all duration-500 ${
         isDark
           ? "bg-white/95 backdrop-blur-xl border-b border-black/[0.06] shadow-sm"
           : scrolled
-          ? "bg-black/60 backdrop-blur-xl"
+          ? "bg-black/80 backdrop-blur-xl border-b border-white/[0.05]"
           : "bg-transparent"
       }`}
     >
-      <div className="max-w-[1400px] mx-auto px-6 md:px-10 h-[72px] flex items-center justify-between">
+      <div className="w-full px-6 md:px-10 h-[72px] flex items-center justify-between">
         {/* Logo */}
         <a href="/" className="flex items-center gap-0.5 group">
           <span className={`text-xl font-black tracking-[-0.05em] uppercase transition-colors duration-300 ${logoText}`}>
@@ -300,7 +303,110 @@ export default function Navbar({ forceTheme }: { forceTheme?: "light" | "dark" }
             Start Project
           </a>
         </div>
+
+        {/* Mobile Toggle */}
+        <button
+          className={`md:hidden p-3 -mr-3 rounded-xl transition-all duration-300 z-[130] active:scale-90 ${
+            isMobileMenuOpen 
+              ? "text-black bg-black/5" 
+              : isDark ? "text-black hover:bg-black/5" : "text-white hover:bg-white/10"
+          }`}
+          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+        >
+          {isMobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
+        </button>
       </div>
+
+      {/* Mobile Menu Fullscreen Top-drop */}
+      <AnimatePresence>
+        {isMobileMenuOpen && (
+          <motion.div
+            initial={{ y: "-100%" }}
+            animate={{ y: 0 }}
+            exit={{ y: "-100%" }}
+            transition={{ type: "spring", damping: 35, stiffness: 350 }}
+            className="fixed inset-0 w-full h-screen bg-white z-[120] md:hidden flex flex-col"
+          >
+            <div className="p-8 flex flex-col h-full">
+              <div className="flex items-center justify-between mb-16">
+                <div className="flex items-center gap-0.5">
+                  <span className="text-2xl font-black tracking-tight uppercase text-black">BE</span>
+                  <span className="text-2xl font-black text-[#00BAFF]">.</span>
+                </div>
+                {/* Spacer for the absolute positioned X button in the nav bar above */}
+                <div className="w-10 h-10" />
+              </div>
+
+              <nav className="flex-1 flex flex-col justify-center space-y-8 pb-20">
+                <motion.a 
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.1 }}
+                  href="/" 
+                  className="block text-5xl font-black tracking-tighter text-black hover:text-[#00BAFF] transition-colors"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  Home
+                </motion.a>
+                <motion.a 
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.15 }}
+                  href="/about" 
+                  className="block text-5xl font-black tracking-tighter text-black hover:text-[#00BAFF] transition-colors"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  About
+                </motion.a>
+                <motion.a 
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.2 }}
+                  href="/work" 
+                  className="block text-5xl font-black tracking-tighter text-black hover:text-[#00BAFF] transition-colors"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  Case Studies
+                </motion.a>
+                <motion.a 
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.25 }}
+                  href="/blog" 
+                  className="block text-5xl font-black tracking-tighter text-black hover:text-[#00BAFF] transition-colors"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  Blog
+                </motion.a>
+              </nav>
+
+              <motion.div 
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.3 }}
+                className="space-y-4 pt-8 border-t border-black/[0.05]"
+              >
+                <button
+                  onClick={() => {
+                    setIsMobileMenuOpen(false);
+                    setBookCallOpen(true);
+                  }}
+                  className="w-full flex items-center justify-center gap-3 bg-black/5 text-black text-[14px] font-black uppercase tracking-widest py-5 rounded-2xl hover:bg-black/10 transition-all"
+                >
+                  <PhoneCall size={16} /> Book a Call
+                </button>
+                <a
+                  href="/start"
+                  className="w-full flex items-center justify-center gap-3 bg-[#00BAFF] text-black text-[14px] font-black uppercase tracking-widest py-5 rounded-2xl hover:bg-black hover:text-white transition-all shadow-lg"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  Start Project <ArrowRight size={18} />
+                </a>
+              </motion.div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </nav>
     <BookCallModal isOpen={bookCallOpen} onClose={() => setBookCallOpen(false)} />
     </>

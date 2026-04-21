@@ -200,12 +200,12 @@ export default function AboutPage() {
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
             transition={{ delay: 0.45, duration: 0.6 }}
-            className="text-[20px] text-white/45 max-w-2xl mx-auto mb-16 leading-relaxed font-medium"
+            className="text-[17px] md:text-[20px] text-white/45 max-w-2xl mx-auto mb-10 md:mb-16 leading-relaxed font-medium px-4 md:px-0"
           >
             BE is more than a name; it&apos;s an aspirational promise.
             We shift the focus from what we do to what we enable.
             We deliver the finished state of existence for your business.
-            <span className="text-white/80 block mt-5 italic text-[18px]">&ldquo;You dream it, we help you BE it.&rdquo;</span>
+            <span className="text-white/80 block mt-4 md:mt-5 italic text-base md:text-[18px]">&ldquo;You dream it, we help you BE it.&rdquo;</span>
           </motion.p>
 
           <motion.div
@@ -213,17 +213,17 @@ export default function AboutPage() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.6, duration: 0.6 }}
-            className="flex flex-wrap items-center justify-center gap-5"
+            className="flex flex-col sm:flex-row items-center justify-center gap-4 md:gap-5 px-6 md:px-0"
           >
             <button
               onClick={() => setBookCallOpen(true)}
-              className="inline-flex items-center gap-3 bg-white text-black text-[14px] font-black uppercase tracking-wider px-12 py-5 rounded-full hover:bg-[#00BAFF] hover:text-white transition-all duration-300 active:scale-95"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-3 bg-white text-black text-[13px] md:text-[14px] font-black uppercase tracking-wider px-10 md:px-12 py-5 rounded-full hover:bg-[#00BAFF] hover:text-white transition-all duration-300 active:scale-95"
             >
               <PhoneCall size={18} /> Book a call
             </button>
             <a
               href="/start"
-              className="group flex items-center gap-2 text-[14px] font-bold text-white/50 hover:text-white transition-colors duration-300 uppercase tracking-widest"
+              className="group flex items-center justify-center gap-2 text-[13px] md:text-[14px] font-bold text-white/50 hover:text-white transition-colors duration-300 uppercase tracking-widest"
             >
               Start Your Journey <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
             </a>
@@ -235,11 +235,11 @@ export default function AboutPage() {
           STATS BAR
       ══════════════════════════════════════════ */}
       <div className="bg-[#050505] border-y border-white/[0.06]">
-        <div className="max-w-[1400px] mx-auto px-6 py-16 grid grid-cols-2 md:grid-cols-4 gap-10">
+        <div className="max-w-[1400px] mx-auto px-6 py-12 md:py-16 grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-10">
           {STATS.map((s, i) => (
             <FadeUp key={s.label} delay={i * 0.1} className="text-center">
-              <div className="text-[52px] font-black text-white tracking-tighter leading-none mb-2">{s.number}</div>
-              <div className="text-[11px] text-white/30 uppercase tracking-[0.25em] font-black">{s.label}</div>
+              <div className="text-[36px] md:text-[52px] font-black text-white tracking-tighter leading-none mb-1.5 md:mb-2">{s.number}</div>
+              <div className="text-[9px] md:text-[11px] text-white/30 uppercase tracking-[0.25em] font-black">{s.label}</div>
             </FadeUp>
           ))}
         </div>
@@ -269,16 +269,16 @@ export default function AboutPage() {
             </h2>
           </FadeUp>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
             {PHILOSOPHY.map((item, i) => (
               <FadeUp key={item.word} delay={i * 0.1}>
-                <div className="group p-12 rounded-[40px] border border-black/[0.06] bg-[#F7F8FA] hover:border-[#00BAFF]/30 hover:bg-white hover:shadow-2xl transition-all duration-500">
-                  <div className="text-[11px] font-black text-[#00BAFF] uppercase tracking-[0.2em] mb-6">BE [{item.word}]</div>
-                  <div className="w-14 h-14 rounded-2xl bg-black/[0.04] flex items-center justify-center mb-8 group-hover:bg-[#00BAFF] group-hover:text-white transition-all duration-300">
-                    <item.icon size={26} />
+                <div className="group p-8 md:p-12 rounded-3xl md:rounded-[40px] border border-black/[0.06] bg-[#F7F8FA] hover:border-[#00BAFF]/30 hover:bg-white hover:shadow-2xl transition-all duration-500 h-full">
+                  <div className="text-[10px] md:text-[11px] font-black text-[#00BAFF] uppercase tracking-[0.2em] mb-4 md:mb-6">BE [{item.word}]</div>
+                  <div className="w-12 h-12 md:w-14 md:h-14 rounded-xl md:rounded-2xl bg-black/[0.04] flex items-center justify-center mb-6 md:mb-8 group-hover:bg-[#00BAFF] group-hover:text-white transition-all duration-300">
+                    <item.icon size={22} className="md:w-[26px] md:h-[26px]" />
                   </div>
-                  <h3 className="text-[28px] font-black text-black tracking-tight mb-5">{item.word}</h3>
-                  <p className="text-black/50 text-[16px] leading-relaxed">{item.desc}</p>
+                  <h3 className="text-[24px] md:text-[28px] font-black text-black tracking-tight mb-4 md:mb-5">{item.word}</h3>
+                  <p className="text-black/50 text-sm md:text-[16px] leading-relaxed">{item.desc}</p>
                 </div>
               </FadeUp>
             ))}
@@ -391,26 +391,26 @@ export default function AboutPage() {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
             {TEAM.map((founder, i) => (
               <FadeUp key={founder.name} delay={i * 0.15}>
-                <div className="group relative rounded-[40px] border border-white/[0.08] bg-[#0A0A0A] overflow-hidden hover:bg-[#111] hover:border-[#00BAFF]/30 transition-all duration-500 p-10 lg:p-14 min-h-[380px] flex flex-col justify-end">
+                <div className="group relative rounded-3xl md:rounded-[40px] border border-white/[0.08] bg-[#0A0A0A] overflow-hidden hover:bg-[#111] hover:border-[#00BAFF]/30 transition-all duration-500 p-8 md:p-14 min-h-[340px] md:min-h-[380px] flex flex-col justify-end">
                   {/* Subtle Top-Right Accent */}
                   <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-br from-[#00BAFF]/0 to-[#00BAFF]/[0.08] rounded-full blur-3xl group-hover:to-[#00BAFF]/20 group-hover:scale-150 transition-all duration-700 ease-out pointer-events-none" />
 
                   {/* Top Quote Icon / Decor */}
                   <div className="absolute top-10 left-10 text-white/[0.03] group-hover:text-[#00BAFF]/10 transition-colors duration-500">
-                    <User size={80} strokeWidth={1} />
+                    <User size={60} className="md:w-20 md:h-20" strokeWidth={1} />
                   </div>
 
                   <div className="relative z-10">
-                    <div className="flex items-center gap-4 mb-8">
-                      <div className="w-14 h-14 rounded-2xl bg-white/[0.05] border border-white/[0.1] flex items-center justify-center text-white/50 text-[20px] font-black group-hover:bg-[#00BAFF]/10 group-hover:text-[#00BAFF] group-hover:border-[#00BAFF]/30 transition-all duration-300">
+                    <div className="flex items-center gap-4 mb-6 md:mb-8">
+                      <div className="w-12 h-12 md:w-14 md:h-14 rounded-xl md:rounded-2xl bg-white/[0.05] border border-white/[0.1] flex items-center justify-center text-white/50 text-[18px] md:text-[20px] font-black group-hover:bg-[#00BAFF]/10 group-hover:text-[#00BAFF] group-hover:border-[#00BAFF]/30 transition-all duration-300">
                         {founder.name[0]}
                       </div>
                       <div>
-                        <h3 className="text-[24px] md:text-[28px] font-black text-white leading-tight mb-1">{founder.name}</h3>
-                        <div className="text-[11px] font-black text-[#00BAFF] uppercase tracking-[0.2em]">{founder.role}</div>
+                        <h3 className="text-[22px] md:text-[28px] font-black text-white leading-tight mb-0.5 md:mb-1">{founder.name}</h3>
+                        <div className="text-[10px] md:text-[11px] font-black text-[#00BAFF] uppercase tracking-[0.2em]">{founder.role}</div>
                       </div>
                     </div>
-                    <p className="text-[16px] text-white/45 leading-relaxed font-medium">
+                    <p className="text-sm md:text-[16px] text-white/45 leading-relaxed font-medium">
                       {founder.bio}
                     </p>
                   </div>

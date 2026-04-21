@@ -133,7 +133,7 @@ export default function Home() {
       {/* ══════════════════════════════════════════
           HERO
       ══════════════════════════════════════════ */}
-      <section className="relative min-h-screen w-full flex flex-col items-center justify-center bg-[#050505] text-white overflow-hidden">
+      <section className="relative min-h-[90vh] md:min-h-screen w-full flex flex-col items-center justify-center bg-[#050505] text-white overflow-hidden pt-12 md:pt-0">
         {/* Grid overlay */}
         <div
           aria-hidden
@@ -175,11 +175,11 @@ export default function Home() {
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
             transition={{ delay: 0.45, duration: 0.6 }}
-            className="text-[19px] text-white/45 max-w-xl mx-auto mb-14 leading-relaxed font-medium"
+            className="text-base md:text-[19px] text-white/45 max-w-xl mx-auto mb-10 md:mb-14 leading-relaxed font-medium px-4 md:px-0"
           >
             We deliver the finished state of existence for your vision.
             Custom software, high performance, zero compromises.
-            <span className="text-white/80 block mt-4 italic text-[16px]">&ldquo;You dream it, we help you BE it.&rdquo;</span>
+            <span className="text-white/80 block mt-4 italic text-sm md:text-[16px]">&ldquo;You dream it, we help you BE it.&rdquo;</span>
           </motion.p>
 
           {/* CTAs */}
@@ -188,19 +188,19 @@ export default function Home() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.6, duration: 0.6 }}
-            className="flex flex-wrap items-center justify-center gap-4"
+            className="flex flex-col sm:flex-row items-center justify-center gap-3 md:gap-4 px-6 md:px-0"
           >
             <a
               id="hero-cta-primary"
-              href="#contact"
-              className="inline-flex items-center gap-2 bg-white text-black text-[13px] font-black uppercase tracking-wider px-8 py-4 rounded-full hover:bg-[#00BAFF] hover:text-white transition-all duration-300 hover:gap-3 active:scale-95"
+              href="/start"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-white text-black text-[12px] md:text-[13px] font-black uppercase tracking-wider px-8 py-4 rounded-full hover:bg-[#00BAFF] hover:text-white transition-all duration-300 hover:gap-3 active:scale-95"
             >
               Share your idea <ArrowRight size={15} />
             </a>
             <button
               id="hero-book-call-btn"
               onClick={() => setBookCallOpen(true)}
-              className="inline-flex items-center gap-2 border border-white/30 text-white text-[13px] font-black uppercase tracking-wider px-8 py-4 rounded-full hover:border-[#00BAFF] hover:text-[#00BAFF] transition-all duration-300 active:scale-95"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 border border-white/30 text-white text-[12px] md:text-[13px] font-black uppercase tracking-wider px-8 py-4 rounded-full hover:border-[#00BAFF] hover:text-[#00BAFF] transition-all duration-300 active:scale-95"
             >
               <PhoneCall size={14} /> Book a Call
             </button>
@@ -230,12 +230,12 @@ export default function Home() {
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true }}
-              className="text-center md:px-8"
+              className="text-center md:px-8 border-r border-white/[0.07] last:border-0 md:border-0"
             >
-              <div className="text-[42px] font-black text-white tracking-tight leading-none">
+              <div className="text-[32px] md:text-[42px] font-black text-white tracking-tight leading-none">
                 {s.number}
               </div>
-              <div className="text-[12px] text-white/35 uppercase tracking-widest mt-1.5 font-semibold">
+              <div className="text-[9px] md:text-[12px] text-white/35 uppercase tracking-widest mt-1.5 font-semibold">
                 {s.label}
               </div>
             </motion.div>
@@ -389,7 +389,7 @@ export default function Home() {
               href="/work"
               variants={fadeUp}
               custom={2}
-              className="group relative rounded-3xl overflow-hidden bg-black border border-white/[0.08] aspect-[4/3] lg:aspect-auto min-h-[480px] flex flex-col justify-end p-10 lg:p-14 transition-all duration-500 hover:border-[#00BAFF]/40 hover:shadow-[0_0_40px_rgba(0,186,255,0.15)]"
+              className="group relative rounded-3xl overflow-hidden bg-black border border-white/[0.08] min-h-[400px] md:min-h-[520px] flex flex-col justify-end p-8 md:p-14 transition-all duration-500 hover:border-[#00BAFF]/40 hover:shadow-[0_0_40px_rgba(0,186,255,0.15)]"
             >
               {/* Image / Graphic Background */}
               <div className="absolute inset-0 z-0">
@@ -406,13 +406,13 @@ export default function Home() {
 
               {/* Content */}
               <div className="relative z-10">
-                <span className="inline-block px-3 py-1.5 rounded-lg bg-[#00BAFF]/10 border border-[#00BAFF]/20 text-[10px] font-black uppercase tracking-widest text-[#00BAFF] mb-6">
+                <span className="inline-block px-3 py-1.5 rounded-lg bg-[#00BAFF]/10 border border-[#00BAFF]/20 text-[10px] font-black uppercase tracking-widest text-[#00BAFF] mb-4 md:mb-6">
                   Artificial Intelligence
                 </span>
-                <h3 className="text-[32px] md:text-[40px] font-black text-white leading-tight tracking-tight mb-4 group-hover:text-[#00BAFF] transition-colors duration-300">
+                <h3 className="text-2xl md:text-[40px] font-black text-white leading-tight tracking-tight mb-3 md:mb-4 group-hover:text-[#00BAFF] transition-colors duration-300">
                   Autonomous Workflows
                 </h3>
-                <p className="text-[16px] text-white/50 max-w-md leading-relaxed font-medium mb-8">
+                <p className="text-[14px] md:text-[16px] text-white/50 max-w-md leading-relaxed font-medium mb-6 md:mb-8">
                   We integrate advanced LLMs and neural networks to automate your supply chain, reducing operational friction by up to 80%.
                 </p>
                 <div className="flex items-center gap-2 text-[12px] font-bold text-white uppercase tracking-wider group-hover:text-[#00BAFF] transition-colors">
@@ -426,7 +426,7 @@ export default function Home() {
               href="/work"
               variants={fadeUp}
               custom={3}
-              className="group relative rounded-3xl overflow-hidden bg-black border border-white/[0.08] aspect-[4/3] lg:aspect-auto min-h-[480px] flex flex-col justify-end p-10 lg:p-14 transition-all duration-500 hover:border-[#00BAFF]/40 hover:shadow-[0_0_40px_rgba(0,186,255,0.15)]"
+              className="group relative rounded-3xl overflow-hidden bg-black border border-white/[0.08] min-h-[400px] md:min-h-[520px] flex flex-col justify-end p-8 md:p-14 transition-all duration-500 hover:border-[#00BAFF]/40 hover:shadow-[0_0_40px_rgba(0,186,255,0.15)]"
             >
               {/* Image / Graphic Background */}
               <div className="absolute inset-0 z-0">
@@ -448,13 +448,13 @@ export default function Home() {
 
               {/* Content */}
               <div className="relative z-10">
-                <span className="inline-block px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 text-[10px] font-black uppercase tracking-widest text-white mb-6 group-hover:border-white/20 transition-colors">
+                <span className="inline-block px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 text-[10px] font-black uppercase tracking-widest text-white mb-4 md:mb-6 group-hover:border-white/20 transition-colors">
                   Enterprise Architecture
                 </span>
-                <h3 className="text-[32px] md:text-[40px] font-black text-white leading-tight tracking-tight mb-4 group-hover:text-white transition-colors duration-300">
+                <h3 className="text-2xl md:text-[40px] font-black text-white leading-tight tracking-tight mb-3 md:mb-4 group-hover:text-white transition-colors duration-300">
                   Zero-Trust Systems
                 </h3>
-                <p className="text-[16px] text-white/50 max-w-md leading-relaxed font-medium mb-8">
+                <p className="text-[14px] md:text-[16px] text-white/50 max-w-md leading-relaxed font-medium mb-6 md:mb-8">
                   Security doesn't have to sacrifice speed. We build impregnable digital fortresses that perform at the speed of thought.
                 </p>
                 <div className="flex items-center gap-2 text-[12px] font-bold text-white uppercase tracking-wider group-hover:text-[#00BAFF] transition-colors">

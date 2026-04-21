@@ -68,7 +68,7 @@ export default function StartProjectPage() {
 
   return (
     <>
-      <main className="min-h-screen bg-white text-black pt-32 pb-20 px-6">
+      <main className="min-h-screen bg-white text-black pt-24 md:pt-32 pb-16 md:pb-20 px-6">
         <Navbar forceTheme="dark" />
         {/* Background decoration */}
       <div
@@ -80,9 +80,9 @@ export default function StartProjectPage() {
         }}
       />
 
-      <div className="max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-20 relative z-10">
+      <div className="max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 relative z-10">
         {/* Left Side: Context */}
-        <div className="max-w-md">
+        <div className="max-w-md mx-auto lg:mx-0">
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
@@ -91,12 +91,12 @@ export default function StartProjectPage() {
             <span className="text-[11px] font-black uppercase tracking-[0.2em] text-[#00BAFF] block mb-6">
               Start Your Evolution
             </span>
-            <h1 className="text-[clamp(48px,5vw,72px)] font-black leading-[0.9] tracking-[-0.05em] mb-10">
+            <h1 className="text-[48px] md:text-[60px] lg:text-[72px] font-black leading-[0.9] tracking-[-0.05em] mb-6 md:mb-10">
               Let&apos;s build
               <br />
               <span className="text-black/20">something.</span>
             </h1>
-            <p className="text-black/50 text-[18px] leading-relaxed mb-12">
+            <p className="text-black/50 text-base md:text-[18px] leading-relaxed mb-8 md:mb-12">
               Tell us about your vision. Whether it&apos;s a complex SaaS platform, 
               a custom AI agent, or a mobile revolution, we&apos;re ready to help you BE it.
             </p>
@@ -138,7 +138,7 @@ export default function StartProjectPage() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2, ease }}
-          className="bg-[#F7F8FA] rounded-[40px] p-8 md:p-12 border border-black/[0.04] shadow-2xl"
+          className="bg-[#F7F8FA] rounded-3xl md:rounded-[40px] p-6 md:p-12 border border-black/[0.04] shadow-2xl"
         >
           <form onSubmit={handleSubmit} className="space-y-8">
             <div className="space-y-6">
