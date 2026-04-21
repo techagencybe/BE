@@ -44,19 +44,20 @@ export async function bookCall(formData: FormData) {
       },
     });
 
-    // Send confirmation to User
-    await sendEmail({
-      to: email,
-      subject: "Your BE. Agency Call Request",
-      html: userConfirmationTemplate(name, "We've received your call request!"),
-    });
-
-    // Send alert to Admin
-    await sendEmail({
-      to: adminEmail,
-      subject: `New Booking Request from ${name}`,
-      html: adminNotificationTemplate("Call Booking", { name, email, company }),
-    });
+    // Await both emails (parallel). In serverless (Vercel), we MUST await or the process may be killed before sending.
+    // The 5s timeout in mailer.ts ensures this doesn't hang forever.
+    await Promise.allSettled([
+      sendEmail({
+        to: email,
+        subject: "Your BE. Agency Call Request",
+        html: userConfirmationTemplate(name, "We've received your call request!"),
+      }),
+      sendEmail({
+        to: adminEmail,
+        subject: `New Booking Request from ${name}`,
+        html: adminNotificationTemplate("Call Booking", { name, email, company }),
+      })
+    ]);
 
     return { success: true };
   } catch (error) {
@@ -81,19 +82,19 @@ export async function startProject(formData: FormData) {
       },
     });
 
-    // Send confirmation to User
-    await sendEmail({
-      to: email,
-      subject: "Your BE. Agency Project Inquiry",
-      html: userConfirmationTemplate(name, "We've received your project details!"),
-    });
-
-    // Send alert to Admin
-    await sendEmail({
-      to: adminEmail,
-      subject: `New Project Inquiry from ${name}`,
-      html: adminNotificationTemplate("Project Inquiry", { name, email, type, details }),
-    });
+    // Await both emails (parallel) for Vercel compatibility
+    await Promise.allSettled([
+      sendEmail({
+        to: email,
+        subject: "Your BE. Agency Project Inquiry",
+        html: userConfirmationTemplate(name, "We've received your project details!"),
+      }),
+      sendEmail({
+        to: adminEmail,
+        subject: `New Project Inquiry from ${name}`,
+        html: adminNotificationTemplate("Project Inquiry", { name, email, type, details }),
+      })
+    ]);
 
     return { success: true };
   } catch (error) {
@@ -121,24 +122,24 @@ export async function subscribeNewsletter(formData: FormData) {
       },
     });
 
-    // Confirmation to user
-    await sendEmail({
-      to: email,
-      subject: "Welcome to BE. Labs Newsletter",
-      html: `
-        <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; color: #111;">
-          <h2>Welcome to BE. Labs</h2>
-          <p>Thanks for subscribing. We'll send you our latest insights on engineering, design, and growth.</p>
-        </div>
-      `,
-    });
-
-    // Notification to admin
-    await sendEmail({
-      to: adminEmail,
-      subject: `New Newsletter Subscriber`,
-      html: `<p>New subscriber: ${email}</p>`,
-    });
+    // Await both emails (parallel) for Vercel compatibility
+    await Promise.allSettled([
+      sendEmail({
+        to: email,
+        subject: "Welcome to BE. Labs Newsletter",
+        html: `
+          <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; color: #111;">
+            <h2>Welcome to BE. Labs</h2>
+            <p>Thanks for subscribing. We'll send you our latest insights on engineering, design, and growth.</p>
+          </div>
+        `,
+      }),
+      sendEmail({
+        to: adminEmail,
+        subject: `New Newsletter Subscriber`,
+        html: `<p>New subscriber: ${email}</p>`,
+      })
+    ]);
 
     return { success: true };
   } catch (error) {

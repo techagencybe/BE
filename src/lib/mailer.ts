@@ -1,7 +1,7 @@
 import nodemailer from "nodemailer";
 
 const smtpHost = process.env.SMTP_HOST || "smtp.gmail.com";
-const smtpPort = process.env.SMTP_PORT ? parseInt(process.env.SMTP_PORT) : 465;
+const smtpPort = process.env.SMTP_PORT ? parseInt(process.env.SMTP_PORT) : 587;
 const smtpUser = process.env.SMTP_USER;
 const smtpPass = process.env.SMTP_PASS;
 
@@ -15,6 +15,12 @@ const transporter = nodemailer.createTransport({
     user: smtpUser,
     pass: smtpPass,
   },
+  tls: {
+    rejectUnauthorized: false
+  },
+  connectionTimeout: 5000, // 5 seconds
+  greetingTimeout: 5000,
+  socketTimeout: 5000,
 });
 
 interface SendMailOptions {

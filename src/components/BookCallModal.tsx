@@ -127,19 +127,19 @@ export default function BookCallModal({ isOpen, onClose }: { isOpen: boolean; on
             className="fixed inset-0 z-[201] flex items-center justify-center p-4 md:p-6 pointer-events-none"
           >
             <div
-              className="pointer-events-auto w-full max-w-[680px] bg-white rounded-3xl shadow-[0_32px_100px_rgba(0,0,0,0.25)] overflow-hidden flex flex-col"
-              style={{ maxHeight: "90vh" }}
+              className="pointer-events-auto w-full max-w-[680px] bg-white rounded-2xl md:rounded-3xl shadow-[0_32px_100px_rgba(0,0,0,0.25)] overflow-hidden flex flex-col"
+              style={{ maxHeight: "92vh" }}
               onClick={e => e.stopPropagation()}
             >
               {/* Header */}
-              <div className="flex items-center justify-between px-7 py-5 border-b border-black/[0.06] flex-shrink-0">
+              <div className="flex items-center justify-between px-5 md:px-7 py-4 md:py-5 border-b border-black/[0.06] flex-shrink-0">
                 <div className="flex items-center gap-3">
                   <div className="w-8 h-8 rounded-lg bg-[#00BAFF]/10 flex items-center justify-center">
                     <Calendar size={15} className="text-[#00BAFF]" />
                   </div>
                   <div>
-                    <h2 className="text-[15px] font-black text-black tracking-tight">Book a Call</h2>
-                    <p className="text-[11px] text-black/40">BE. Software Agency</p>
+                    <h2 className="text-[14px] md:text-[15px] font-black text-black tracking-tight leading-tight">Book a Call</h2>
+                    <p className="text-[10px] md:text-[11px] text-black/40">BE. Tech Agency</p>
                   </div>
                 </div>
                 <button
@@ -151,7 +151,7 @@ export default function BookCallModal({ isOpen, onClose }: { isOpen: boolean; on
               </div>
 
               {/* Step Progress */}
-              <div className="px-7 py-4 border-b border-black/[0.06] flex-shrink-0">
+              <div className="px-5 md:px-7 py-3 md:py-4 border-b border-black/[0.06] flex-shrink-0">
                 <div className="flex items-center gap-0">
                   {STEPS.map((label, i) => {
                     const stepNum = (i + 1) as Step;
@@ -160,19 +160,19 @@ export default function BookCallModal({ isOpen, onClose }: { isOpen: boolean; on
                     return (
                       <div key={label} className="flex items-center flex-1 min-w-0">
                         <div className="flex flex-col items-center gap-1 flex-shrink-0">
-                          <div className={`w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-black transition-colors duration-300 ${
+                          <div className={`w-5 h-5 md:w-6 md:h-6 rounded-full flex items-center justify-center text-[9px] md:text-[10px] font-black transition-colors duration-300 ${
                             isDone ? "bg-[#00BAFF] text-white" :
                             isActive ? "bg-black text-white" :
                             "bg-black/[0.06] text-black/30"
                           }`}>
-                            {isDone ? <CheckCircle2 size={12} /> : stepNum}
+                            {isDone ? <CheckCircle2 size={10} className="md:w-3 md:h-3" /> : stepNum}
                           </div>
-                          <span className={`text-[9px] font-bold uppercase tracking-wider whitespace-nowrap ${
+                          <span className={`text-[8px] md:text-[9px] font-bold uppercase tracking-wider whitespace-nowrap ${
                             isActive ? "text-black" : "text-black/30"
                           }`}>{label}</span>
                         </div>
                         {i < STEPS.length - 1 && (
-                          <div className={`h-[1px] flex-1 mx-2 transition-colors duration-300 ${
+                          <div className={`h-[1px] flex-1 mx-1.5 md:mx-2 transition-colors duration-300 ${
                             isDone ? "bg-[#00BAFF]" : "bg-black/[0.08]"
                           }`} />
                         )}
@@ -193,30 +193,30 @@ export default function BookCallModal({ isOpen, onClose }: { isOpen: boolean; on
                       animate={{ opacity: 1, x: 0 }}
                       exit={{ opacity: 0, x: -24 }}
                       transition={{ duration: 0.2 }}
-                      className="p-7"
+                      className="p-5 md:p-7"
                     >
-                      <h3 className="text-[18px] font-black text-black mb-1">What kind of call?</h3>
-                      <p className="text-[13px] text-black/45 mb-6">Choose the meeting type that fits your needs.</p>
-                      <div className="space-y-3">
+                      <h3 className="text-[17px] md:text-[18px] font-black text-black mb-1">What kind of call?</h3>
+                      <p className="text-[12px] md:text-[13px] text-black/45 mb-5 md:mb-6">Choose the meeting type that fits your needs.</p>
+                      <div className="space-y-2 md:space-y-3">
                         {MEETING_TYPES.map(mt => (
                           <button
                             key={mt.id}
                             onClick={() => setMeetingType(mt.id)}
-                            className={`w-full text-left p-4 rounded-2xl border-2 transition-all duration-200 ${
+                            className={`w-full text-left p-3.5 md:p-4 rounded-xl md:rounded-2xl border-2 transition-all duration-200 ${
                               meetingType === mt.id
                                 ? "border-[#00BAFF] bg-[#00BAFF]/[0.04]"
                                 : "border-black/[0.07] hover:border-black/20"
                             }`}
                           >
                             <div className="flex items-center justify-between">
-                              <span className="text-[15px] font-black text-black">{mt.label}</span>
-                              <span className={`text-[11px] font-bold px-2.5 py-1 rounded-full flex items-center gap-1 ${
+                              <span className="text-[14px] md:text-[15px] font-black text-black">{mt.label}</span>
+                              <span className={`text-[10px] md:text-[11px] font-bold px-2 py-1 rounded-full flex items-center gap-1 ${
                                 meetingType === mt.id ? "bg-[#00BAFF]/10 text-[#00BAFF]" : "bg-black/[0.05] text-black/40"
                               }`}>
                                 <Clock size={10} /> {mt.duration}
                               </span>
                             </div>
-                            <p className="text-[12px] text-black/45 mt-1">{mt.desc}</p>
+                            <p className="text-[11px] md:text-[12px] text-black/45 mt-0.5 md:mt-1">{mt.desc}</p>
                           </button>
                         ))}
                       </div>
@@ -231,15 +231,15 @@ export default function BookCallModal({ isOpen, onClose }: { isOpen: boolean; on
                       animate={{ opacity: 1, x: 0 }}
                       exit={{ opacity: 0, x: -24 }}
                       transition={{ duration: 0.2 }}
-                      className="p-7"
+                      className="p-5 md:p-7"
                     >
-                      <h3 className="text-[18px] font-black text-black mb-1">Pick a date & time</h3>
-                      <p className="text-[13px] text-black/45 mb-6">All times shown in your local timezone.</p>
+                      <h3 className="text-[17px] md:text-[18px] font-black text-black mb-1">Pick a date & time</h3>
+                      <p className="text-[12px] md:text-[13px] text-black/45 mb-5 md:mb-6 leading-tight">All times shown in your local timezone.</p>
 
                       {/* Calendar */}
-                      <div className="bg-[#F8F9FA] rounded-2xl p-5 mb-5">
+                      <div className="bg-[#F8F9FA] rounded-xl md:rounded-2xl p-4 md:p-5 mb-4 md:mb-5">
                         <div className="flex items-center justify-between mb-4">
-                          <span className="text-[14px] font-black text-black">
+                          <span className="text-[13px] md:text-[14px] font-black text-black">
                             {MONTHS[currentMonth]} {currentYear}
                           </span>
                           <div className="flex gap-1">
@@ -253,9 +253,9 @@ export default function BookCallModal({ isOpen, onClose }: { isOpen: boolean; on
                         </div>
 
                         {/* Day headers */}
-                        <div className="grid grid-cols-7 mb-2">
+                        <div className="grid grid-cols-7 mb-1 md:mb-2">
                           {DAYS.map(d => (
-                            <div key={d} className="text-center text-[10px] font-bold text-black/30 uppercase tracking-wider py-1">
+                            <div key={d} className="text-center text-[9px] md:text-[10px] font-bold text-black/30 uppercase tracking-wider py-1">
                               {d}
                             </div>
                           ))}
@@ -277,7 +277,7 @@ export default function BookCallModal({ isOpen, onClose }: { isOpen: boolean; on
                                 key={day}
                                 disabled={disabled}
                                 onClick={() => setSelectedDate(day)}
-                                className={`h-8 w-full rounded-lg text-[13px] font-semibold transition-all duration-150 ${
+                                className={`h-7 md:h-8 w-full rounded-lg text-[12px] md:text-[13px] font-semibold transition-all duration-150 ${
                                   selected
                                     ? "bg-[#00BAFF] text-white font-black"
                                     : disabled
@@ -299,21 +299,21 @@ export default function BookCallModal({ isOpen, onClose }: { isOpen: boolean; on
                           animate={{ opacity: 1, y: 0 }}
                           transition={{ duration: 0.2 }}
                         >
-                          <p className="text-[12px] font-bold text-black/40 uppercase tracking-wider mb-3">
+                          <p className="text-[11px] font-bold text-black/40 uppercase tracking-wider mb-2.5">
                             Available times — {MONTHS[currentMonth]} {selectedDate}
                           </p>
-                          <div className="grid grid-cols-4 sm:grid-cols-5 gap-2">
+                          <div className="grid grid-cols-3 sm:grid-cols-5 gap-1.5 md:gap-2">
                             {TIME_SLOTS.map(t => (
                               <button
                                 key={t}
                                 onClick={() => setSelectedTime(t)}
-                                className={`py-2 rounded-xl text-[11px] font-bold border transition-all duration-150 ${
+                                className={`py-1.5 md:py-2 rounded-lg md:rounded-xl text-[10px] md:text-[11px] font-bold border transition-all duration-150 ${
                                   selectedTime === t
                                     ? "bg-[#00BAFF] text-white border-[#00BAFF]"
                                     : "border-black/[0.08] text-black/60 hover:border-[#00BAFF]/40 hover:text-[#00BAFF]"
                                 }`}
                               >
-                                {t}
+                                {t.replace(" AM", "AM").replace(" PM", "PM")}
                               </button>
                             ))}
                           </div>
@@ -437,10 +437,10 @@ export default function BookCallModal({ isOpen, onClose }: { isOpen: boolean; on
 
               {/* Footer actions */}
               {step !== 4 && (
-                <div className="px-7 py-5 border-t border-black/[0.06] flex items-center justify-between flex-shrink-0">
+                <div className="px-5 md:px-7 py-4 md:py-5 border-t border-black/[0.06] flex items-center justify-between flex-shrink-0">
                   <button
                     onClick={() => step > 1 ? setStep(s => (s - 1) as Step) : handleClose()}
-                    className="flex items-center gap-1.5 text-[12px] font-bold text-black/40 hover:text-black transition-colors"
+                    className="flex items-center gap-1.5 text-[11px] md:text-[12px] font-bold text-black/40 hover:text-black transition-colors"
                   >
                     <ChevronLeft size={14} /> {step === 1 ? "Cancel" : "Back"}
                   </button>
@@ -455,7 +455,7 @@ export default function BookCallModal({ isOpen, onClose }: { isOpen: boolean; on
                       if (step === 3) handleConfirm();
                       else setStep(s => (s + 1) as Step);
                     }}
-                    className="bg-black text-white text-[12px] font-black uppercase tracking-wider px-7 py-3 rounded-full hover:bg-[#00BAFF] transition-all duration-300 disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:bg-black flex items-center justify-center min-w-[140px]"
+                    className="bg-black text-white text-[11px] md:text-[12px] font-black uppercase tracking-wider px-6 md:px-7 py-3 md:py-3.5 rounded-full hover:bg-[#00BAFF] transition-all duration-300 disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:bg-black flex items-center justify-center min-w-[120px] md:min-w-[140px]"
                   >
                     {isSubmitting ? <Loader2 size={16} className="animate-spin" /> : step === 3 ? "Confirm Booking" : "Continue"}
                   </button>
