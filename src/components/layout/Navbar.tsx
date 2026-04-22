@@ -366,6 +366,16 @@ export default function Navbar({ forceTheme }: { forceTheme?: "light" | "dark" }
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.2 }}
+                  href="/services" 
+                  className="block text-5xl font-black tracking-tighter text-black hover:text-[#00BAFF] transition-colors"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  Services
+                </motion.a>
+                <motion.a 
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.25 }}
                   href="/work" 
                   className="block text-5xl font-black tracking-tighter text-black hover:text-[#00BAFF] transition-colors"
                   onClick={() => setIsMobileMenuOpen(false)}
@@ -375,7 +385,7 @@ export default function Navbar({ forceTheme }: { forceTheme?: "light" | "dark" }
                 <motion.a 
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.25 }}
+                  transition={{ delay: 0.3 }}
                   href="/blog" 
                   className="block text-5xl font-black tracking-tighter text-black hover:text-[#00BAFF] transition-colors"
                   onClick={() => setIsMobileMenuOpen(false)}
@@ -387,7 +397,7 @@ export default function Navbar({ forceTheme }: { forceTheme?: "light" | "dark" }
               <motion.div 
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.3 }}
+                transition={{ delay: 0.35 }}
                 className="space-y-4 pt-8 border-t border-black/[0.05]"
               >
                 <button
