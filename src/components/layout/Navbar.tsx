@@ -18,6 +18,8 @@ import {
   PhoneCall,
   Menu,
   X,
+  MessageCircle,
+  Infinity,
 } from "lucide-react";
 import BookCallModal from "@/components/BookCallModal";
 
@@ -36,14 +38,14 @@ const SERVICES_MENU = {
         desc: "iOS, Android & cross-platform",
       },
       {
+        icon: MessageCircle,
+        title: "Telegram Mini Apps",
+        desc: "TMA ecosystems & bots",
+      },
+      {
         icon: Palette,
         title: "UI/UX Design",
         desc: "Interfaces people love to use",
-      },
-      {
-        icon: Code2,
-        title: "MVP Development",
-        desc: "Launch fast, iterate faster",
       },
     ],
   },
@@ -52,13 +54,13 @@ const SERVICES_MENU = {
     items: [
       {
         icon: Server,
-        title: "Cloud Architecture",
-        desc: "Scalable, resilient infrastructure",
+        title: "Robust Infrastructure",
+        desc: "Scalable VPS & managed servers",
       },
       {
-        icon: Database,
-        title: "Database Design",
-        desc: "Postgres, Redis & beyond",
+        icon: Infinity,
+        title: "CI/CD Pipelines",
+        desc: "Automated continuous delivery",
       },
       {
         icon: ShieldCheck,
@@ -172,7 +174,8 @@ export default function Navbar({ forceTheme }: { forceTheme?: "light" | "dark" }
             onMouseEnter={openMenu}
             onMouseLeave={closeMenu}
           >
-            <button
+            <a
+              href="/services"
               className={`flex items-center gap-1.5 text-[13px] font-semibold tracking-wide transition-colors duration-300 ${
                 isServicesOpen ? textActive : textBase
               }`}
@@ -184,7 +187,7 @@ export default function Navbar({ forceTheme }: { forceTheme?: "light" | "dark" }
               >
                 <ChevronDown size={14} strokeWidth={2.5} />
               </motion.span>
-            </button>
+            </a>
 
             <AnimatePresence>
               {isServicesOpen && (
@@ -218,7 +221,8 @@ export default function Navbar({ forceTheme }: { forceTheme?: "light" | "dark" }
                           {col.items.map((item) => (
                             <a
                               key={item.title}
-                              href="#"
+                              href={`/services#${col.label.toLowerCase()}`}
+                              onClick={() => setIsServicesOpen(false)}
                               className="flex items-start gap-3 p-2.5 rounded-xl hover:bg-[#00BAFF]/[0.06] group/item transition-colors"
                             >
                               <div className="w-8 h-8 rounded-lg bg-black/[0.04] group-hover/item:bg-[#00BAFF]/10 flex items-center justify-center flex-shrink-0 transition-colors">
