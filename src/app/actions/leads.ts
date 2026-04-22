@@ -5,13 +5,13 @@ import { sendEmail, adminEmail } from "@/lib/mailer";
 
 // Email Templates
 const userConfirmationTemplate = (name: string, subject: string) => `
-  <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; color: #111;">
-    <h2>${subject}</h2>
+  <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; color: #111; line-height: 1.6;">
+    <h2 style="color: #00BAFF;">${subject}</h2>
     <p>Hi ${name || "there"},</p>
-    <p>Thanks for reaching out! We've received your request and our founders, Euodia and Bolaji, will review it shortly.</p>
+    <p>Thanks for reaching out! We've received your request and we'll get back to you shortly.</p>
     <p>If you have any urgent questions, feel free to reply directly to this email.</p>
     <br/>
-    <p>Best,<br/>The BE. Agency Team</p>
+    <p>Best,<br/>Euodia & Bolaji<br/>The BE. Agency Team</p>
   </div>
 `;
 
@@ -112,7 +112,7 @@ export async function subscribeNewsletter(formData: FormData) {
     });
 
     if (existing) {
-      return { success: true, message: "Already subscribed!" };
+      return { success: true, alreadyJoined: true };
     }
 
     await db.lead.create({

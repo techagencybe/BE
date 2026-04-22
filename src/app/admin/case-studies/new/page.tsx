@@ -7,7 +7,7 @@ import Editor from "@/components/admin/Editor";
 import { 
   ArrowLeft, Save, Image as ImageIcon, 
   Loader2, X, Plus, Terminal, Users, 
-  Layout, Sparkles
+  Layout, Sparkles, Globe
 } from "lucide-react";
 import { useRouter } from "next/navigation";
 
@@ -179,6 +179,17 @@ export default function NewCaseStudy() {
                   name="stack"
                   required
                   placeholder="React, Next.js, Node.js"
+                  className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3.5 text-sm text-white focus:outline-none focus:border-[#00BAFF]/50"
+                />
+              </div>
+              
+              <div className="space-y-3">
+                <label className="text-[10px] font-black uppercase tracking-widest text-white/30 flex items-center gap-2 block ml-1">
+                  <Globe size={12} /> Project Link (Optional)
+                </label>
+                <input 
+                  name="link"
+                  placeholder="https://example.com"
                   className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3.5 text-sm text-white focus:outline-none focus:border-[#00BAFF]/50"
                 />
               </div>

@@ -6,12 +6,6 @@ datasource db {
   provider = "postgresql"
 }
 
-enum Role {
-  MASTER
-  WRITER
-  PORTFOLIO
-}
-
 model Admin {
   id           String   @id @default(cuid())
   email        String   @unique
@@ -30,11 +24,12 @@ model CaseStudy {
   desc      String
   results   String[]
   stack     String[]
-  content   String   @db.Text
+  content   String
   image     String?
-  published Boolean  @default(true)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  published Boolean  @default(true)
+  link      String?
 }
 
 model Post {
@@ -45,12 +40,31 @@ model Post {
   category  String
   author    String
   readTime  String
-  content   String   @db.Text
+  content   String
   image     String?
   featured  Boolean  @default(false)
   published Boolean  @default(true)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model Lead {
+  id          String     @id @default(cuid())
+  type        LeadType
+  name        String?
+  email       String
+  details     String?
+  meetingLink String?
+  meetingTime DateTime?
+  status      LeadStatus @default(PENDING)
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+}
+
+enum Role {
+  MASTER
+  WRITER
+  PORTFOLIO
 }
 
 enum LeadType {
@@ -63,18 +77,5 @@ enum LeadStatus {
   PENDING
   SCHEDULED
   COMPLETED
+  ARCHIVED
 }
-
-model Lead {
-  id          String     @id @default(cuid())
-  type        LeadType
-  name        String?
-  email       String
-  details     String?    @db.Text
-  meetingLink String?
-  meetingTime DateTime?
-  status      LeadStatus @default(PENDING)
-  createdAt   DateTime   @default(now())
-  updatedAt   DateTime   @updatedAt
-}
-

@@ -3,9 +3,10 @@
 import { motion } from "framer-motion";
 import { 
   Search, ArrowUpRight, Clock, User, Filter, 
-  ChevronRight, Calendar
+  ChevronRight, Calendar, Loader2
 } from "lucide-react";
 import { useState } from "react";
+import { subscribeNewsletter } from "@/app/actions/leads";
 
 const fadeUp = {
   initial: { opacity: 0, y: 20 },
@@ -31,6 +32,32 @@ const FadeUp = ({ children, delay = 0 }: { children: React.ReactNode, delay?: nu
 export default function BlogClient({ posts }: { posts: any[] }) {
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [searchQuery, setSearchQuery] = useState("");
+  const [email, setEmail] = useState("");
+  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+
+  async function handleSubscribe(e: React.FormEvent) {
+    e.preventDefault();
+    setStatus("loading");
+    const formData = new FormData();
+    formData.append("email", email);
+    const res = await subscribeNewsletter(formData);
+    if (res.success) {
+      if (res.alreadyJoined) {
+        setStatus("success");
+        setEmail("Already Joined!");
+      } else {
+        setStatus("success");
+        setEmail("");
+      }
+      setTimeout(() => {
+        setStatus("idle");
+        setEmail("");
+      }, 5000);
+    } else {
+      setStatus("error");
+      setTimeout(() => setStatus("idle"), 3000);
+    }
+  }
 
   const categories = ["All", ...Array.from(new Set(posts.map(p => p.category)))];
 
@@ -53,12 +80,12 @@ export default function BlogClient({ posts }: { posts: any[] }) {
             <span className="text-[11px] font-black uppercase tracking-[0.3em] text-[#00BAFF] block mb-8">
               The BE. Journal
             </span>
-            <h1 className="text-[clamp(28px,8vw,110px)] font-black leading-[0.85] tracking-[-0.05em] text-black mb-10 break-words">
+            <h1 className="text-[clamp(36px,10vw,110px)] font-black leading-[0.85] tracking-[-0.05em] text-black mb-8 break-words">
               Insights for the
-              <br />
-              <span className="text-black/10">Modern Builder.</span>
+              <br className="sm:hidden" />
+              <span className="md:block text-black/20"> Modern Builder.</span>
             </h1>
-            <p className="max-w-2xl text-[17px] md:text-[19px] text-black/40 leading-relaxed font-medium">
+            <p className="max-w-2xl text-[16px] md:text-[19px] text-black/50 leading-relaxed font-medium">
               Deep dives into engineering, design, and AI. No fluff, just actionable insights from the front lines of product development.
             </p>
           </FadeUp>
@@ -66,14 +93,14 @@ export default function BlogClient({ posts }: { posts: any[] }) {
       </section>
 
       {/* Filter & Search */}
-      <section className="sticky top-[80px] z-20 bg-white/80 backdrop-blur-xl border-b border-black/[0.05] py-6 overflow-hidden">
-        <div className="max-w-[1400px] mx-auto px-6 md:px-10 flex flex-col md:flex-row items-center justify-between gap-8">
-          <div className="flex items-center gap-2 overflow-x-auto no-scrollbar w-full md:w-auto pb-4 md:pb-0 scroll-smooth">
+      <section className="sticky top-[72px] z-20 bg-white/80 backdrop-blur-xl border-b border-black/[0.05] py-4 md:py-6">
+        <div className="max-w-[1400px] mx-auto px-6 md:px-10 flex flex-col md:flex-row items-center justify-between gap-6 md:gap-8">
+          <div className="flex items-center gap-2 overflow-x-auto no-scrollbar w-full md:w-auto pb-2 md:pb-0 scroll-smooth">
             {categories.map((cat) => (
               <button
                 key={cat}
                 onClick={() => setSelectedCategory(cat)}
-                className={`px-6 py-2 rounded-xl text-[11px] font-black uppercase tracking-widest whitespace-nowrap transition-all duration-300 ${
+                className={`px-5 py-2 rounded-xl text-[10px] md:text-[11px] font-black uppercase tracking-widest whitespace-nowrap transition-all duration-300 ${
                   selectedCategory === cat
                     ? "bg-black text-white"
                     : "text-black/30 hover:bg-black/5 hover:text-black"
@@ -91,43 +118,43 @@ export default function BlogClient({ posts }: { posts: any[] }) {
               placeholder="Search articles..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full bg-[#F8F9FA] border border-black/[0.05] rounded-2xl py-4 pl-12 pr-6 text-sm focus:outline-none focus:border-[#00BAFF]/30 transition-all"
+              className="w-full bg-[#F8F9FA] border border-black/[0.05] rounded-2xl py-3 md:py-4 pl-12 pr-6 text-sm focus:outline-none focus:border-[#00BAFF]/30 transition-all"
             />
           </div>
         </div>
       </section>
 
-      <section className="py-24 bg-[#F8F9FA]">
+      <section className="py-16 md:py-24 bg-[#F8F9FA]">
         <div className="max-w-[1400px] mx-auto px-6">
           {/* Featured Post */}
           {featuredPost && (
             <FadeUp>
-              <a href={`/blog/${featuredPost.slug}`} className="group block relative mb-24 rounded-[40px] overflow-hidden bg-black aspect-square md:aspect-[21/9] min-h-[350px] md:min-h-[400px]">
+              <a href={`/blog/${featuredPost.slug}`} className="group block relative mb-12 md:mb-24 rounded-[32px] md:rounded-[40px] overflow-hidden bg-[#0A0A0A] aspect-[4/5] md:aspect-[21/9] min-h-[350px] md:min-h-[400px] border border-black/[0.05]">
                 <img 
                   src={featuredPost.image || "/blog.png"} 
                   alt={featuredPost.title} 
-                  className="w-full h-full object-cover opacity-60 group-hover:scale-105 transition-transform duration-[2s]"
+                  className="w-full h-full object-cover opacity-50 md:opacity-60 group-hover:scale-105 transition-transform duration-[2s]"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent p-6 md:p-16 flex flex-col justify-end">
+                <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent p-8 md:p-16 flex flex-col justify-end">
                   <div className="max-w-3xl">
-                    <div className="flex items-center gap-4 mb-6">
-                      <span className="px-3 py-1 rounded-lg bg-[#00BAFF] text-[10px] font-black uppercase tracking-widest text-white">Featured</span>
-                      <span className="text-[12px] font-bold text-white/60 tracking-wide">{featuredPost.category}</span>
+                    <div className="flex items-center gap-4 mb-4 md:mb-6">
+                      <span className="px-3 py-1 rounded-lg bg-[#00BAFF] text-[9px] md:text-[10px] font-black uppercase tracking-widest text-white">Featured</span>
+                      <span className="text-[11px] md:text-[12px] font-bold text-white/60 tracking-wide">{featuredPost.category}</span>
                     </div>
-                    <h2 className="text-xl md:text-5xl lg:text-6xl font-black text-white leading-[1.2] mb-6 group-hover:text-[#00BAFF] transition-colors break-words">
+                    <h2 className="text-3xl md:text-5xl lg:text-6xl font-black text-white leading-[1.1] mb-6 group-hover:text-[#00BAFF] transition-colors break-words">
                       {featuredPost.title}
                     </h2>
                     <p className="text-lg text-white/40 leading-relaxed mb-8 hidden md:block">
                       {featuredPost.excerpt}
                     </p>
                     <div className="flex items-center gap-6">
-                      <div className="flex items-center gap-2 text-[14px] font-bold text-white">
+                      <div className="flex items-center gap-2 text-[13px] md:text-[14px] font-bold text-white">
                         <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-[10px] font-black">
                           {featuredPost.author[0]}
                         </div>
                         {featuredPost.author}
                       </div>
-                      <div className="flex items-center gap-2 text-[14px] font-bold text-white/30">
+                      <div className="flex items-center gap-2 text-[13px] md:text-[14px] font-bold text-white/30">
                         <Clock size={16} /> {featuredPost.readTime}
                       </div>
                     </div>
@@ -180,14 +207,14 @@ export default function BlogClient({ posts }: { posts: any[] }) {
           </div>
 
           {filteredPosts.length === 0 && (
-            <div className="py-32 text-center">
-              <p className="text-black/40 text-xl font-bold">No results found.</p>
+            <div className="py-20 md:py-32 text-center">
+              <p className="text-black/40 text-lg md:text-xl font-bold">No results found.</p>
             </div>
           )}
         </div>
       </section>
       {/* Newsletter */}
-      <section className="py-20 bg-white px-6">
+      <section className="py-12 md:py-20 bg-white px-6">
         <FadeUp>
           <div className="max-w-4xl mx-auto bg-[#050505] rounded-[40px] p-8 md:p-16 relative overflow-hidden text-center">
             {/* Grid Overlay */}
@@ -207,14 +234,37 @@ export default function BlogClient({ posts }: { posts: any[] }) {
                 Join 5,000+ builders getting our weekly breakdown on tech, design, and product scaling.
               </p>
               
-              <form className="max-w-md mx-auto flex flex-col md:flex-row gap-4">
-                <input 
-                  type="email" 
-                  placeholder="Email address"
-                  className="flex-1 bg-white/[0.03] border border-white/10 rounded-2xl px-6 py-4 text-white focus:outline-none focus:border-[#00BAFF]/50 transition-all text-sm"
-                />
-                <button className="bg-white text-black px-10 py-4 rounded-2xl font-black uppercase tracking-widest text-[11px] hover:bg-[#00BAFF] hover:text-white transition-all duration-300">
-                  Join
+              <form onSubmit={handleSubscribe} className="max-w-md mx-auto flex flex-col sm:flex-row gap-4">
+                <div className="flex-1 relative">
+                  <input 
+                    type="email" 
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                    placeholder={status === "success" ? "Subscribed!" : "Email address"}
+                    disabled={status === "loading" || status === "success"}
+                    className={`w-full bg-white/[0.03] border border-white/10 rounded-2xl px-6 py-4 text-white focus:outline-none transition-all text-sm ${
+                      status === "success" ? "border-green-500/50" : "focus:border-[#00BAFF]/50"
+                    }`}
+                  />
+                  {status === "error" && (
+                    <span className="absolute -bottom-6 left-0 text-[10px] text-red-400 font-bold uppercase">Try again</span>
+                  )}
+                </div>
+                <button 
+                  type="submit"
+                  disabled={status === "loading" || status === "success"}
+                  className={`px-10 py-4 rounded-2xl font-black uppercase tracking-widest text-[11px] transition-all duration-300 min-w-[140px] flex items-center justify-center gap-2 ${
+                    status === "success" ? "bg-green-500 text-white" : "bg-white text-black hover:bg-[#00BAFF] hover:text-white shadow-xl active:scale-95"
+                  }`}
+                >
+                  {status === "loading" ? (
+                    <Loader2 className="animate-spin" size={16} />
+                  ) : status === "success" ? (
+                    "Joined"
+                  ) : (
+                    "Join"
+                  )}
                 </button>
               </form>
             </div>
