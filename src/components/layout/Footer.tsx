@@ -1,10 +1,38 @@
 "use client";
 
+import { useState } from "react";
 import { motion } from "framer-motion";
-import { Send, Globe, Share2, ArrowUpRight, Mail, Phone, MapPin, ArrowRight } from "lucide-react";
+import { Send, Globe, Share2, ArrowUpRight, Mail, Phone, MapPin, ArrowRight, Loader2, CheckCircle2 } from "lucide-react";
+import { subscribeNewsletter } from "@/app/actions/leads";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
+  const [email, setEmail] = useState("");
+  const [status, setStatus] = useState("idle");
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setStatus("loading");
+    const formData = new FormData();
+    formData.append("email", email);
+    const result = await subscribeNewsletter(formData);
+    if (result.success) {
+      if (result.alreadyJoined) {
+        setStatus("success"); // We still use success style
+        setEmail("Already Joined!");
+      } else {
+        setStatus("success");
+        setEmail("");
+      }
+      setTimeout(() => {
+        setStatus("idle");
+        setEmail("");
+      }, 5000);
+    } else {
+      setStatus("error");
+      setTimeout(() => setStatus("idle"), 3000);
+    }
+  };
 
   return (
     <footer className="relative bg-[#050505] pt-32 pb-16 overflow-hidden border-t border-white/5">
@@ -85,16 +113,37 @@ export default function Footer() {
             <p className="text-white/60 text-[14px] leading-relaxed mb-8 font-medium">
               Join 2,000+ visionaries receiving our weekly product & engineering deep dives.
             </p>
-            <form className="relative group">
+            <form onSubmit={handleSubmit} className="relative group">
               <input
                 type="email"
-                placeholder="Your email address"
-                className="w-full bg-white/[0.03] border border-white/10 rounded-2xl py-5 pl-6 pr-16 text-sm text-white placeholder:text-white/20 focus:outline-none focus:border-[#00BAFF]/50 transition-all duration-500"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+                placeholder={status === "success" ? "Subscribed!" : "Your email address"}
+                disabled={status === "loading" || status === "success"}
+                className={`w-full bg-white/[0.03] border border-white/10 rounded-2xl py-5 pl-6 pr-16 text-sm text-white placeholder:text-white/20 focus:outline-none transition-all duration-500 ${
+                  status === "success" ? "border-green-500/50" : "focus:border-[#00BAFF]/50"
+                }`}
               />
-              <button className="absolute right-2 top-2 bottom-2 aspect-square bg-[#00BAFF] text-black rounded-xl flex items-center justify-center hover:bg-white transition-all duration-300">
-                <ArrowRight size={20} strokeWidth={3} />
+              <button 
+                type="submit" 
+                disabled={status === "loading" || status === "success"}
+                className={`absolute right-2 top-2 bottom-2 aspect-square rounded-xl flex items-center justify-center transition-all duration-300 ${
+                  status === "success" ? "bg-green-500 text-white" : "bg-[#00BAFF] text-black hover:bg-white"
+                }`}
+              >
+                {status === "loading" ? (
+                  <Loader2 className="animate-spin" size={18} />
+                ) : status === "success" ? (
+                  <CheckCircle2 size={20} />
+                ) : (
+                  <ArrowRight size={20} strokeWidth={3} />
+                )}
               </button>
             </form>
+            {status === "error" && (
+              <p className="text-red-400 text-[10px] font-bold uppercase mt-2 ml-2">Failed to subscribe. Try again.</p>
+            )}
           </div>
         </div>
 

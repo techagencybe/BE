@@ -6,7 +6,7 @@ import { uploadImage } from "@/app/actions/upload";
 import Editor from "@/components/admin/Editor";
 import { 
   ArrowLeft, Save, Image as ImageIcon, 
-  Loader2, X, Users, Layers, Trophy
+  Loader2, X, Users, Layers, Trophy, Globe
 } from "lucide-react";
 import { useRouter } from "next/navigation";
 
@@ -48,6 +48,7 @@ export default function EditCaseStudy({ params }: { params: Promise<{ id: string
     setIsUploading(true);
     const formData = new FormData();
     formData.append("file", file);
+    formData.append("upload_preset", "ml_default");
 
     try {
       const res = await uploadImage(formData);
@@ -228,6 +229,18 @@ export default function EditCaseStudy({ params }: { params: Promise<{ id: string
                   name="stack"
                   defaultValue={study?.stack.join(", ")}
                   placeholder="e.g. Next.js, TypeScript, OpenAI"
+                  className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 text-sm text-white focus:outline-none focus:border-[#00BAFF]"
+                />
+              </div>
+
+              <div className="space-y-4">
+                <label className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-white/30 ml-1">
+                  <Globe size={14} /> Project Link (Optional)
+                </label>
+                <input 
+                  name="link"
+                  defaultValue={study?.link}
+                  placeholder="https://example.com"
                   className="w-full bg-white/5 border border-white/10 rounded-2xl px-5 py-4 text-sm text-white focus:outline-none focus:border-[#00BAFF]"
                 />
               </div>

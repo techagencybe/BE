@@ -47,6 +47,7 @@ export async function createCaseStudy(formData: FormData, content: string) {
   const results = (formData.get("results") as string).split(",").map(s => s.trim());
   const stack = (formData.get("stack") as string).split(",").map(s => s.trim());
   const image = formData.get("image") as string;
+  const link = formData.get("link") as string;
 
   const slug = title
     .toLowerCase()
@@ -65,6 +66,7 @@ export async function createCaseStudy(formData: FormData, content: string) {
         stack,
         content,
         image,
+        link,
       },
     });
     revalidatePath("/work");
@@ -84,6 +86,7 @@ export async function updateCaseStudy(id: string, formData: FormData, content: s
   const results = (formData.get("results") as string).split(",").map(s => s.trim());
   const stack = (formData.get("stack") as string).split(",").map(s => s.trim());
   const image = formData.get("image") as string;
+  const link = formData.get("link") as string;
 
   const slug = title
     .toLowerCase()
@@ -103,6 +106,7 @@ export async function updateCaseStudy(id: string, formData: FormData, content: s
         stack,
         content,
         image,
+        link,
       },
     });
     revalidatePath("/work");

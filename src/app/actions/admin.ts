@@ -150,12 +150,58 @@ export async function deleteLead(id: string) {
   if (!session) return { success: false, error: "Unauthorized" };
 
   try {
-    await db.lead.delete({
+    await db.lead.update({
       where: { id },
+      data: { status: "ARCHIVED" },
     });
     return { success: true };
   } catch (error) {
     console.error("Error deleting lead:", error);
     return { success: false, error: "Failed to delete lead" };
+  }
+}
+
+export async function respondToLead(leadId: string, message: string) {
+  const session = await getSession();
+  if (!session) return { success: false, error: "Unauthorized" };
+
+  try {
+    const lead = await db.lead.findUnique({ where: { id: leadId } });
+    if (!lead) return { success: false, error: "Lead not found" };
+
+    await sendEmail({
+      to: lead.email,
+      subject: `Re: Your ${lead.type.toLowerCase()} inquiry with BE. Agency`,
+      html: `
+        <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; color: #111; line-height: 1.6;">
+          <h2 style="color: #00BAFF; font-size: 24px; font-weight: 900; letter-spacing: -0.02em;">Response from BE. Agency</h2>
+          <p>Hi ${lead.name || "there"},</p>
+          <div style="background: #f7f8fa; padding: 30px; border-radius: 20px; margin: 30px 0; border: 1px solid #eee; white-space: pre-wrap; color: #333; font-size: 15px;">${message}</div>
+          <p>If you have any further questions, feel free to reply directly to this email.</p>
+          <br/>
+          <p style="margin: 0; font-weight: bold; color: #000;">Best Regards,</p>
+          <p style="margin: 0; color: #666;">Euodia & Bolaji</p>
+          <p style="margin: 0; color: #00BAFF; font-weight: bold;">The BE. Agency Team</p>
+          
+          <hr style="border: none; border-top: 1px solid #eee; margin: 40px 0;"/>
+          <div style="color: #999; font-size: 12px; background: #fafafa; padding: 20px; border-radius: 10px;">
+            <p style="margin-bottom: 10px; font-weight: bold; text-transform: uppercase; letter-spacing: 0.1em; color: #ccc;">Original Inquiry Details</p>
+            <p style="margin: 0;"><strong>From:</strong> ${lead.email}</p>
+            <p style="margin: 5px 0 0 0;"><strong>Message:</strong></p>
+            <p style="margin: 5px 0 0 0; font-style: italic;">${lead.details?.replace(/\n/g, "<br/>") || "No details provided"}</p>
+          </div>
+        </div>
+      `,
+    });
+
+    await db.lead.update({
+      where: { id: leadId },
+      data: { status: "COMPLETED" }
+    });
+
+    return { success: true };
+  } catch (error) {
+    console.error("Error responding to lead:", error);
+    return { success: false, error: "Failed to send response" };
   }
 }
