@@ -2,7 +2,7 @@
 
 import { ReactNode, useState } from "react";
 import { 
-  Users, Briefcase, FileText, Settings, LogOut, Menu, X 
+  Users, Briefcase, FileText, Settings, LogOut, Menu, X, DollarSign 
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { usePathname, useRouter } from "next/navigation";
@@ -18,6 +18,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
 
   const navItems = [
     { label: "Leads", icon: Users, href: "/admin" },
+    { label: "Accounting", icon: DollarSign, href: "/admin/accounting" },
     { label: "Case Studies", icon: Briefcase, href: "/admin/case-studies" },
     { label: "Blog", icon: FileText, href: "/admin/blog" },
     { label: "Settings", icon: Settings, href: "/admin/settings" },

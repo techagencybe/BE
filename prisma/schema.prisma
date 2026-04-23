@@ -79,3 +79,20 @@ enum LeadStatus {
   COMPLETED
   ARCHIVED
 }
+
+enum TransactionType {
+  REVENUE
+  EXPENSE
+}
+
+model Transaction {
+  id              String          @id @default(cuid())
+  type            TransactionType
+  amount          Float
+  description     String
+  externalFunding Float           @default(0)
+  isRepaid        Boolean         @default(false)
+  date            DateTime        @default(now())
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+}
