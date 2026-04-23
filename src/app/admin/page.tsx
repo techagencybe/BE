@@ -143,33 +143,33 @@ export default function AdminDashboard() {
     <div className="min-h-screen bg-[#050505] text-white">
       <header className="p-6 lg:p-10 border-b border-white/[0.05] flex flex-col sm:flex-row sm:items-center justify-between gap-6 bg-[#050505]/80 backdrop-blur sticky top-0 z-20">
         <div>
-          <h1 className="text-2xl font-black tracking-tight">Inbound Leads</h1>
-          <p className="text-[10px] text-white/30 font-bold uppercase tracking-widest mt-1">Growth Command Center</p>
+          <h1 className="text-2xl font-black tracking-tight">Admin Portal</h1>
+          <p className="text-[10px] text-white/30 font-bold uppercase tracking-widest mt-1">Growth & Financial Command Center</p>
         </div>
         
         <div className="flex items-center gap-3">
           <div className="px-4 py-2 bg-green-500/10 border border-green-500/20 rounded-full text-[10px] font-black uppercase tracking-wider text-green-400 flex items-center gap-2">
             <div className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
-            Database Synced
+            System Live
           </div>
         </div>
       </header>
 
       <div className="p-6 lg:p-10 max-w-7xl mx-auto space-y-10 pb-32">
         {/* Stats Grid */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-          {[
-            { label: "Total Leads", value: stats.total, color: "text-[#00BAFF]" },
-            { label: "Projects", value: stats.projects, color: "text-purple-400" },
-            { label: "Bookings", value: stats.bookings, color: "text-green-400" },
-            { label: "Newsletter", value: stats.newsletter, color: "text-orange-400" },
-          ].map((stat, i) => (
-            <div key={i} className="bg-[#0A0A0A] border border-white/[0.05] p-6 rounded-3xl">
-              <p className="text-[10px] font-black uppercase tracking-widest text-white/30 mb-2">{stat.label}</p>
-              <p className={`text-3xl font-black ${stat.color}`}>{stat.value}</p>
-            </div>
-          ))}
-        </div>
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 animate-in fade-in slide-in-from-top-4 duration-700">
+            {[
+              { label: "Total Leads", value: stats.total, color: "text-[#00BAFF]" },
+              { label: "Projects", value: stats.projects, color: "text-purple-400" },
+              { label: "Bookings", value: stats.bookings, color: "text-green-400" },
+              { label: "Newsletter", value: stats.newsletter, color: "text-orange-400" },
+            ].map((stat, i) => (
+              <div key={i} className="bg-[#0A0A0A] border border-white/[0.05] p-6 rounded-3xl">
+                <p className="text-[10px] font-black uppercase tracking-widest text-white/30 mb-2">{stat.label}</p>
+                <p className={`text-3xl font-black ${stat.color}`}>{stat.value}</p>
+              </div>
+            ))}
+          </div>
 
         {/* Tabs */}
         <div className="flex flex-wrap items-center gap-2 bg-[#0A0A0A] p-1.5 rounded-2xl border border-white/[0.05] w-fit">
