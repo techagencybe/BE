@@ -16,7 +16,9 @@ import {
   MessageCircle,
   Infinity,
   Terminal,
-  Activity
+  Activity,
+  Lock,
+  ShieldAlert
 } from "lucide-react";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
@@ -88,6 +90,7 @@ export default function ServicesClient({ studies }: { studies: any[] }) {
   const buildCitations = getCitations(['Web', 'Mobile', 'Next.js', 'React', 'App', 'Frontend', 'Telegram']);
   const scaleCitations = getCitations(['Cloud', 'Scale', 'AWS', 'Infrastructure', 'Performance', 'Database', 'Backend']);
   const innovateCitations = getCitations(['AI', 'Automation', 'LLM', 'GPT', 'Agent', 'Integration', 'Mini App']);
+  const securityCitations = getCitations(['Security', 'Audit', 'Encryption', 'Auth', 'Protection', 'Privacy', 'Hardening']);
 
   return (
     <main className="bg-[#050505]">
@@ -113,7 +116,7 @@ export default function ServicesClient({ studies }: { studies: any[] }) {
           >
             High Performance
             <br />
-            <span className="text-white/20">Digital Architecture.</span>
+            <span className="text-white/60">Digital Architecture.</span>
           </motion.h1>
           <motion.p
             initial={{ opacity: 0 }}
@@ -129,11 +132,12 @@ export default function ServicesClient({ studies }: { studies: any[] }) {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5 }}
-            className="flex flex-wrap justify-center gap-12 text-[10px] font-black uppercase tracking-[0.3em] text-white/20"
+            className="flex flex-wrap justify-center gap-12 text-[10px] font-black uppercase tracking-[0.3em] text-white/50"
           >
             <div className="flex items-center gap-3"><span className="w-1.5 h-1.5 rounded-full bg-[#00BAFF] shadow-[0_0_10px_#00BAFF]" /> Build</div>
             <div className="flex items-center gap-3"><span className="w-1.5 h-1.5 rounded-full bg-[#00BAFF] shadow-[0_0_10px_#00BAFF]" /> Scale</div>
             <div className="flex items-center gap-3"><span className="w-1.5 h-1.5 rounded-full bg-[#00BAFF] shadow-[0_0_10px_#00BAFF]" /> Innovate</div>
+            <div className="flex items-center gap-3"><span className="w-1.5 h-1.5 rounded-full bg-[#00BAFF] shadow-[0_0_10px_#00BAFF]" /> Security</div>
           </motion.div>
         </div>
 
@@ -226,7 +230,7 @@ export default function ServicesClient({ studies }: { studies: any[] }) {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-24">
             <div className="lg:col-span-5 order-2 lg:order-1">
               <div className="sticky top-32 space-y-6">
-                <h5 className="text-[10px] font-black uppercase tracking-[0.2em] text-white/20 ml-2">Architecture in Action</h5>
+                <h5 className="text-[10px] font-black uppercase tracking-[0.2em] text-white/40 ml-2">Architecture in Action</h5>
                 {scaleCitations.length > 0 ? (
                   scaleCitations.map(study => (
                     <motion.a
@@ -359,6 +363,93 @@ export default function ServicesClient({ studies }: { studies: any[] }) {
       </section>
 
       {/* ══════════════════════════════════════════
+          PILLAR 4: SECURITY
+      ══════════════════════════════════════════ */}
+      <section id="security" className="bg-[#050505] py-32 px-6 relative overflow-hidden">
+        <div className="absolute inset-0 opacity-[0.03] pointer-events-none"
+          style={{ backgroundImage: "radial-gradient(#00BAFF 1px, transparent 1px)", backgroundSize: "60px 60px" }} />
+        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-[#00BAFF]/5 rounded-full blur-[120px] translate-x-1/4 -translate-y-1/4 pointer-events-none" />
+
+        <div className="max-w-[1400px] mx-auto relative z-10">
+          <SectionHeader
+            title="SECURITY. Hardened by Design."
+            desc="We follow industry-standard security protocols to ensure your application is protected from day one. We don't just build; we protect your digital assets."
+            dark
+          />
+
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-24">
+            <div className="lg:col-span-5 order-2 lg:order-1">
+              <div className="sticky top-32 space-y-6">
+                <h5 className="text-[10px] font-black uppercase tracking-[0.2em] text-white/40 ml-2">Secure Architectures</h5>
+                {securityCitations.length > 0 ? (
+                  securityCitations.map(study => (
+                    <motion.a
+                      key={study.id}
+                      href={`/work/${study.slug}`}
+                      className="group block p-8 rounded-[32px] bg-white/[0.03] border border-white/10 hover:border-[#00BAFF]/50 transition-all duration-500"
+                    >
+                      <h4 className="text-white font-black text-xl mb-2 group-hover:text-[#00BAFF] transition-colors">{study.title}</h4>
+                      <p className="text-white/30 text-sm font-medium line-clamp-2 mb-4">{study.description}</p>
+                      <div className="flex flex-wrap gap-2">
+                        {study.stack.slice(0, 3).map((tech: string) => (
+                          <span key={tech} className="text-[9px] font-black uppercase tracking-widest px-2 py-1 rounded bg-white/5 text-white/40">{tech}</span>
+                        ))}
+                      </div>
+                    </motion.a>
+                  ))
+                ) : (
+                  <div className="p-10 border-2 border-dashed border-white/[0.05] rounded-[40px] text-center">
+                    <p className="text-white/10 font-black uppercase tracking-widest text-[10px]">Security case studies incoming</p>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            <div className="lg:col-span-7 order-1 lg:order-2 space-y-16">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+                <div>
+                  <div className="w-12 h-12 bg-white/[0.03] border border-white/10 rounded-xl flex items-center justify-center mb-6 text-[#00BAFF]">
+                    <ShieldCheck size={24} />
+                  </div>
+                  <h3 className="text-2xl font-black text-white mb-4">Application Hardening</h3>
+                  <p className="text-white/40 leading-relaxed font-medium">
+                    Implementation of OWASP Top 10 security standards, secure authentication flows (OAuth, Auth.js), and end-to-end data encryption.
+                  </p>
+                </div>
+                <div>
+                  <div className="w-12 h-12 bg-white/[0.03] border border-white/10 rounded-xl flex items-center justify-center mb-6 text-[#00BAFF]">
+                    <Lock size={24} />
+                  </div>
+                  <h3 className="text-2xl font-black text-white mb-4">Infrastructure Security</h3>
+                  <p className="text-white/40 leading-relaxed font-medium">
+                    Strict IAM policies, network isolation, and encrypted databases. We architect your cloud presence to be a fortress, not just a server.
+                  </p>
+                </div>
+              </div>
+
+              <div className="p-10 md:p-14 rounded-[48px] border border-white/10 bg-white/[0.02] relative overflow-hidden group">
+                <div className="absolute -bottom-10 -right-10 opacity-[0.05] group-hover:scale-110 transition-all duration-700">
+                  <ShieldAlert size={200} strokeWidth={1} />
+                </div>
+                <div className="relative z-10">
+                  <span className="text-[10px] font-black uppercase tracking-widest text-[#00BAFF] mb-4 block">Our Standard</span>
+                  <h3 className="text-3xl font-black text-white mb-6">Security-First Engineering</h3>
+                  <p className="text-white/60 leading-relaxed max-w-xl font-medium mb-8">
+                    We don't treat security as an afterthought. It is woven into every line of code we write and every architectural decision we make. We follow regular web and application security industry practices to ensure your platform stays ahead of modern cyber threats.
+                  </p>
+                  <div className="flex flex-wrap gap-4">
+                    <div className="px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-[10px] font-black text-white/50 uppercase tracking-widest">OWASP Compliance</div>
+                    <div className="px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-[10px] font-black text-white/50 uppercase tracking-widest">Data Privacy</div>
+                    <div className="px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-[10px] font-black text-white/50 uppercase tracking-widest">Regular Audits</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ══════════════════════════════════════════
           CONTACT CALL TO ACTION
       ══════════════════════════════════════════ */}
       <section className="relative overflow-hidden bg-[#050505] py-40 px-6 text-white text-center">
@@ -381,7 +472,7 @@ export default function ServicesClient({ studies }: { studies: any[] }) {
           >
             Let&apos;s architect your
             <br />
-            <span className="text-white/20">next success.</span>
+            <span className="text-white/60">next success.</span>
           </motion.h2>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
