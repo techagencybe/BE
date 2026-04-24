@@ -32,7 +32,7 @@ export default function NotFound() {
           <h1 className="text-[clamp(80px,20vw,180px)] font-black leading-[0.8] tracking-[-0.08em] mb-8">
             Lost in the
             <br />
-            <span className="text-white/10">System.</span>
+            <span className="text-white/60">System.</span>
           </h1>
           <p className="text-[16px] md:text-[18px] text-white/40 max-w-md mx-auto mb-12 leading-relaxed">
             The page you are looking for has been moved, deleted, or never existed in this dimension.

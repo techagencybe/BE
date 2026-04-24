@@ -20,6 +20,8 @@ import {
   X,
   MessageCircle,
   Infinity,
+  Lock,
+  ShieldAlert,
 } from "lucide-react";
 import BookCallModal from "@/components/BookCallModal";
 
@@ -63,11 +65,6 @@ const SERVICES_MENU = {
         desc: "Automated continuous delivery",
       },
       {
-        icon: ShieldCheck,
-        title: "Security Audit",
-        desc: "Enterprise-grade protection",
-      },
-      {
         icon: BarChart3,
         title: "Performance",
         desc: "Sub-second load times",
@@ -91,6 +88,26 @@ const SERVICES_MENU = {
         icon: Layers,
         title: "System Integration",
         desc: "Connect any stack or API",
+      },
+    ],
+  },
+  security: {
+    label: "SECURITY",
+    items: [
+      {
+        icon: ShieldCheck,
+        title: "Security Audit",
+        desc: "Enterprise-grade protection",
+      },
+      {
+        icon: Lock,
+        title: "Data Encryption",
+        desc: "Secure data at rest & transit",
+      },
+      {
+        icon: ShieldAlert,
+        title: "App Hardening",
+        desc: "OWASP & industry standards",
       },
     ],
   },
@@ -198,7 +215,7 @@ export default function Navbar({ forceTheme }: { forceTheme?: "light" | "dark" }
                   transition={{ duration: 0.18, ease: [0.16, 1, 0.3, 1] }}
                   onMouseEnter={openMenu}
                   onMouseLeave={closeMenu}
-                  className="absolute top-[calc(100%+16px)] -left-8 w-[720px] bg-white rounded-2xl shadow-[0_24px_80px_rgba(0,0,0,0.18)] border border-black/[0.06] overflow-hidden"
+                  className="absolute top-[calc(100%+16px)] -left-64 w-[960px] bg-white rounded-2xl shadow-[0_24px_80px_rgba(0,0,0,0.18)] border border-black/[0.06] overflow-hidden"
                 >
                   {/* Top header strip */}
                   <div className="px-8 pt-6 pb-4 border-b border-black/[0.05]">
@@ -210,8 +227,8 @@ export default function Navbar({ forceTheme }: { forceTheme?: "light" | "dark" }
                     </p>
                   </div>
 
-                  {/* Three columns */}
-                  <div className="grid grid-cols-3 divide-x divide-black/[0.05]">
+                  {/* Four columns */}
+                  <div className="grid grid-cols-4 divide-x divide-black/[0.05]">
                     {Object.values(SERVICES_MENU).map((col) => (
                       <div key={col.label} className="p-6">
                         <p className="text-[10px] font-black uppercase tracking-[0.18em] text-black/30 mb-4">

@@ -47,7 +47,7 @@ export default function WorkClient({ studies }: { studies: any[] }) {
             <h1 className="text-[clamp(32px,10vw,120px)] font-black leading-[0.85] tracking-[-0.05em] text-white mb-10">
               Proof in the
               <br />
-              <span className="text-white/10">Performance.</span>
+              <span className="text-white/60">Performance.</span>
             </h1>
             <p className="max-w-xl mx-auto text-[17px] md:text-[19px] text-white/40 leading-relaxed font-medium">
               We don&apos;t just build features; we solve business problems. Explore how we&apos;ve helped our clients scale with high-performance software and bespoke design.
