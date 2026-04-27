@@ -78,9 +78,9 @@ export default function WorkClient({ studies }: { studies: any[] }) {
       </section>
 
       {/* Grid */}
-      <section className="py-32 relative bg-white">
+      <section className="py-24 relative bg-white">
         <div className="max-w-[1400px] mx-auto px-6">
-          <div className="space-y-24">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10">
             <AnimatePresence mode="popLayout">
               {filteredStudies.map((study, i) => (
                 <motion.div
@@ -91,64 +91,92 @@ export default function WorkClient({ studies }: { studies: any[] }) {
                   viewport={{ once: true }}
                   transition={{ duration: 1, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
                 >
-                  <a href={`/work/${study.slug}`} className="group block relative rounded-[48px] overflow-hidden bg-white border border-black/[0.05] hover:border-[#00BAFF]/40 transition-all duration-1000 shadow-sm hover:shadow-2xl">
-                    <div className="grid grid-cols-1 lg:grid-cols-2">
-                      {/* Image Section */}
-                      <div className="relative aspect-[16/10] lg:aspect-auto overflow-hidden bg-black/5">
-                        <img 
-                          src={study.image || "/work.png"} 
-                          alt={study.title} 
-                          className="w-full h-full object-cover opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-all duration-[2s]"
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-r from-white via-transparent to-transparent hidden lg:block" />
-                        <div className="absolute inset-0 bg-gradient-to-t from-white via-transparent to-transparent lg:hidden" />
+                  <div className="group flex flex-col h-full bg-white border border-black/[0.05] rounded-[32px] overflow-hidden hover:border-[#00BAFF]/40 transition-all duration-700 shadow-sm hover:shadow-xl">
+                    {/* Image Section */}
+                    <a href={`/work/${study.slug}`} className="relative aspect-[16/11] overflow-hidden bg-black/5 block">
+                      <img 
+                        src={study.image || "/work.png"} 
+                        alt={study.title} 
+                        className="w-full h-full object-cover opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-all duration-[2s]"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                      
+                      {study.link && (
+                        <a 
+                          href={study.link}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          onClick={(e) => e.stopPropagation()}
+                          className="absolute top-4 right-4 w-10 h-10 rounded-full bg-white/90 backdrop-blur-md flex items-center justify-center text-black hover:bg-[#00BAFF] hover:text-white transition-all duration-300 shadow-lg z-20"
+                          title="Visit Live Project"
+                        >
+                          <ArrowUpRight size={18} />
+                        </a>
+                      )}
+                    </a>
+
+                    {/* Content Section */}
+                    <div className="p-6 lg:p-8 flex flex-col flex-1">
+                      <div className="flex items-center gap-3 mb-5">
+                        <span className="px-2.5 py-1 rounded-lg bg-black/5 border border-black/10 text-[8px] font-black uppercase tracking-widest text-black/40">
+                          {study.category}
+                        </span>
+                        <div className="w-1 h-1 rounded-full bg-black/10" />
+                        <span className="text-[8px] font-bold text-black/20 uppercase tracking-widest">{study.client}</span>
                       </div>
 
-                      {/* Content Section */}
-                      <div className="p-10 lg:p-20 relative z-10 flex flex-col justify-center bg-white">
-                        <div className="flex items-center gap-4 mb-8">
-                          <span className="px-4 py-1.5 rounded-xl bg-black/5 border border-black/10 text-[10px] font-black uppercase tracking-widest text-black/40">
-                            {study.category}
-                          </span>
-                          <div className="w-1 h-1 rounded-full bg-black/10" />
-                          <span className="text-[10px] font-bold text-black/20 uppercase tracking-widest">{study.client}</span>
-                        </div>
-
-                        <h3 className="text-4xl lg:text-[56px] font-black text-black leading-[1.1] tracking-tight mb-8 group-hover:text-[#00BAFF] transition-colors duration-500">
+                      <a href={`/work/${study.slug}`} className="block group/title">
+                        <h3 className="text-xl lg:text-2xl font-black text-black leading-tight mb-4 group-hover/title:text-[#00BAFF] transition-colors duration-500">
                           {study.title}
                         </h3>
-                        
-                        <p className="text-black/40 text-[18px] lg:text-[20px] leading-relaxed mb-12 max-w-xl">
-                          {study.desc}
-                        </p>
+                      </a>
+                      
+                      <p className="text-black/40 text-[14px] leading-relaxed mb-6 line-clamp-2 font-medium">
+                        {study.desc}
+                      </p>
 
-                        <div className="grid grid-cols-2 gap-10 mb-12">
-                          <div className="space-y-4">
-                            <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-black/20">
-                              <Terminal size={14} className="text-[#00BAFF]" /> Tech Stack
-                            </div>
-                            <div className="flex flex-wrap gap-3">
-                              {study.stack.slice(0, 3).map((t: string) => (
-                                <span key={t} className="text-[13px] font-bold text-black/60">{t}</span>
-                              ))}
-                            </div>
+                      <div className="grid grid-cols-2 gap-4 mb-6 mt-auto border-t border-black/[0.03] pt-6">
+                        <div className="space-y-2">
+                          <div className="flex items-center gap-2 text-[8px] font-black uppercase tracking-widest text-black/20">
+                            <Terminal size={10} className="text-[#00BAFF]" /> Tech
                           </div>
-                          <div className="space-y-4">
-                            <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-black/20">
-                              <Sparkles size={14} className="text-[#00BAFF]" /> Impact
-                            </div>
-                            <div className="text-[13px] font-bold text-[#00BAFF] leading-relaxed">
-                              {study.results[0]}
-                            </div>
+                          <div className="flex flex-wrap gap-1.5">
+                            {study.stack.slice(0, 2).map((t: string) => (
+                              <span key={t} className="text-[10px] font-bold text-black/60">{t}</span>
+                            ))}
                           </div>
                         </div>
-
-                        <div className="flex items-center gap-2 text-[12px] font-black uppercase tracking-widest text-black group-hover:gap-4 transition-all duration-300">
-                          View Full Case Study <ArrowRight size={20} className="text-[#00BAFF]" />
+                        <div className="space-y-2">
+                          <div className="flex items-center gap-2 text-[8px] font-black uppercase tracking-widest text-black/20">
+                            <Sparkles size={10} className="text-[#00BAFF]" /> Impact
+                          </div>
+                          <div className="text-[10px] font-bold text-[#00BAFF] leading-tight line-clamp-2">
+                            {study.results[0]}
+                          </div>
                         </div>
                       </div>
+
+                      <div className="flex items-center justify-between">
+                        <a 
+                          href={`/work/${study.slug}`} 
+                          className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-black hover:text-[#00BAFF] transition-all duration-300"
+                        >
+                          View Details <ArrowRight size={14} />
+                        </a>
+                        
+                        {study.link && (
+                          <a 
+                            href={study.link}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-[10px] font-black uppercase tracking-widest text-[#00BAFF]/40 hover:text-[#00BAFF] transition-all duration-300"
+                          >
+                            Live Site
+                          </a>
+                        )}
+                      </div>
                     </div>
-                  </a>
+                  </div>
                 </motion.div>
               ))}
             </AnimatePresence>
