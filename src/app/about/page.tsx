@@ -66,24 +66,24 @@ const PHILOSOPHY = [
 
 const TIMELINE = [
   {
-    year: "2021",
-    title: "The Genesis",
-    desc: "Euodia and Bolaji founded BE. with a mission to bridge the gap between bold ideas and engineering reality.",
+    tag: "The Genesis",
+    title: "Blueprint for Execution",
+    desc: "Euodia and Bolaji founded BE. with a mission to bridge the gap between bold ideas and engineering reality. We've been building high-performance digital architecture since 2023.",
   },
   {
-    year: "2022",
-    title: "The Build Engine",
-    desc: "Developed our proprietary internal framework that allows us to ship enterprise-grade SaaS 3x faster.",
+    tag: "The Engine",
+    title: "Proprietary Frameworks",
+    desc: "Developing internal tools and workflows that allow us to ship enterprise-grade SaaS and mobile ecosystems with unmatched speed.",
   },
   {
-    year: "2023",
-    title: "Global Reach",
-    desc: "Expanded operations to support visionaries across Europe, North America, and Africa.",
+    tag: "Global Reach",
+    title: "International Operations",
+    desc: "Supporting visionaries across the globe with high-impact engineering and strategic consulting.",
   },
   {
-    year: "2024",
-    title: "AI Integration",
-    desc: "Successfully launched 15+ products with integrated custom AI agents and automation pipelines.",
+    tag: "Innovation",
+    title: "AI & Automation",
+    desc: "Leading the charge in AI integration, launching custom agents and intelligent automation pipelines that redefine business operations.",
   },
 ];
 
@@ -302,7 +302,7 @@ export default function AboutPage() {
                   <span className="text-white/30">brick by brick.</span>
                 </h2>
                 <p className="text-white/45 text-[18px] leading-relaxed max-w-lg">
-                  What started as a shared passion for high-end engineering between
+                  What started as a shared passion for high-end engineering since 2023 between
                   Euodia and Bolaji has evolved into a powerhouse for digital transformation.
                   We don&apos;t just deliver software; we deliver evolution.
                 </p>
@@ -314,10 +314,10 @@ export default function AboutPage() {
               <div className="absolute left-[11px] top-4 bottom-4 w-[1px] bg-white/10" />
 
               {TIMELINE.map((item, i) => (
-                <FadeUp key={item.year} delay={i * 0.1} className="relative pl-12">
+                <FadeUp key={item.title} delay={i * 0.1} className="relative pl-12">
                   {/* Dot */}
                   <div className="absolute left-0 top-1.5 w-6 h-6 rounded-full bg-[#050505] border-2 border-[#00BAFF] shadow-[0_0_15px_rgba(0,186,255,0.5)] z-10" />
-                  <div className="text-[14px] font-black text-[#00BAFF] mb-2">{item.year}</div>
+                  <div className="text-[10px] font-black text-[#00BAFF] mb-2 uppercase tracking-[0.2em]">{item.tag}</div>
                   <h3 className="text-[24px] font-black mb-3">{item.title}</h3>
                   <p className="text-white/40 text-[15px] leading-relaxed">{item.desc}</p>
                 </FadeUp>
