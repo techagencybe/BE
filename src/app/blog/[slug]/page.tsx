@@ -4,6 +4,47 @@ import Navbar from "@/components/layout/Navbar";
 import Footer from "../../../components/layout/Footer";
 import { ArrowLeft, Clock, Calendar, User, Share2 } from "lucide-react";
 import Link from "next/link";
+import { Metadata, ResolvingMetadata } from "next";
+
+export async function generateMetadata(
+  { params }: { params: Promise<{ slug: string }> },
+  parent: ResolvingMetadata
+): Promise<Metadata> {
+  const { slug } = await params;
+  const res = await getPostBySlug(slug);
+
+  if (!res.success || !res.data) {
+    return {
+      title: "Post Not Found",
+    };
+  }
+
+  const post = res.data;
+  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "https://www.techbe.online";
+
+  return {
+    title: post.title,
+    description: post.excerpt || post.content.substring(0, 160).replace(/<[^>]*>?/gm, ''),
+    alternates: {
+      canonical: `/blog/${slug}`,
+    },
+    openGraph: {
+      title: post.title,
+      description: post.excerpt || post.content.substring(0, 160).replace(/<[^>]*>?/gm, ''),
+      url: `${baseUrl}/blog/${slug}`,
+      type: "article",
+      publishedTime: new Date(post.createdAt).toISOString(),
+      authors: [post.author],
+      images: post.image ? [{ url: post.image }] : [],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: post.title,
+      description: post.excerpt || post.content.substring(0, 160).replace(/<[^>]*>?/gm, ''),
+      images: post.image ? [post.image] : [],
+    },
+  };
+}
 
 export default async function BlogPostPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
@@ -14,9 +55,29 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
   }
 
   const post = res.data;
+  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "https://www.techbe.online";
 
   return (
     <main className="min-h-screen bg-white">
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Article",
+              headline: post.title,
+              image: post.image ? [post.image] : [],
+              datePublished: new Date(post.createdAt).toISOString(),
+              dateModified: new Date(post.updatedAt).toISOString(),
+              author: [{
+                "@type": "Person",
+                name: post.author,
+              }],
+            }),
+          }}
+        />
+      </head>
       <Navbar forceTheme="dark" />
       
       <style dangerouslySetInnerHTML={{ __html: `

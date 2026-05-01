@@ -2,6 +2,15 @@ import { db } from "@/lib/db";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "../../components/layout/Footer";
 import BlogClient from "@/app/blog/BlogClient";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Insights & Updates",
+  description: "Read the latest thoughts, insights, and updates from the team at BE. Tech Agency regarding technology, business, and scalable engineering.",
+  alternates: {
+    canonical: "/blog",
+  },
+};
 
 export const revalidate = 60;
 

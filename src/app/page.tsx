@@ -1,5 +1,14 @@
 import { db } from "@/lib/db";
 import HomeClient from "./HomeClient";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "BE. — High-Performance Tech Agency",
+  description: "We build high-performance web & mobile applications for startups, scale-ups, and enterprises. Zero compromises on quality.",
+  alternates: {
+    canonical: "/",
+  },
+};
 
 export const revalidate = 60;
 

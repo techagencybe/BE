@@ -2,6 +2,15 @@ import { db } from "@/lib/db";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "../../components/layout/Footer";
 import WorkClient from "@/app/work/WorkClient";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Our Work",
+  description: "View our portfolio of high-performance web applications, mobile apps, and enterprise SaaS solutions built by BE. Tech Agency.",
+  alternates: {
+    canonical: "/work",
+  },
+};
 
 export const revalidate = 60;
 

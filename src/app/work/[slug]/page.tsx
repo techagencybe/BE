@@ -4,6 +4,45 @@ import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import { ArrowLeft, Globe, Smartphone, Bot, ArrowUpRight } from "lucide-react";
 import Link from "next/link";
+import { Metadata, ResolvingMetadata } from "next";
+
+export async function generateMetadata(
+  { params }: { params: Promise<{ slug: string }> },
+  parent: ResolvingMetadata
+): Promise<Metadata> {
+  const { slug } = await params;
+  const res = await getCaseStudyBySlug(slug);
+
+  if (!res.success || !res.data) {
+    return {
+      title: "Case Study Not Found",
+    };
+  }
+
+  const study = res.data;
+  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "https://www.techbe.online";
+
+  return {
+    title: `${study.title} | ${study.client}`,
+    description: study.desc,
+    alternates: {
+      canonical: `/work/${slug}`,
+    },
+    openGraph: {
+      title: `${study.title} - BE. Tech Agency`,
+      description: study.desc,
+      url: `${baseUrl}/work/${slug}`,
+      type: "article",
+      images: study.image ? [{ url: study.image }] : [],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${study.title} - BE. Tech Agency`,
+      description: study.desc,
+      images: study.image ? [study.image] : [],
+    },
+  };
+}
 
 export default async function CaseStudyPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
@@ -17,6 +56,26 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
 
   return (
     <main className="min-h-screen bg-white text-black pt-32">
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Article",
+              headline: study.title,
+              description: study.desc,
+              image: study.image ? [study.image] : [],
+              datePublished: new Date(study.createdAt).toISOString(),
+              dateModified: new Date(study.updatedAt).toISOString(),
+              author: [{
+                "@type": "Organization",
+                name: "BE. Tech Agency",
+              }],
+            }),
+          }}
+        />
+      </head>
       <Navbar forceTheme="dark" />
       
       <style dangerouslySetInnerHTML={{ __html: `
