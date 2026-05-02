@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import { ArrowLeft, Globe, Smartphone, Bot, ArrowUpRight } from "lucide-react";
-import Link from "next/link";
+
 import { Metadata, ResolvingMetadata } from "next";
 
 export async function generateMetadata(
@@ -56,7 +56,6 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
 
   return (
     <main className="min-h-screen bg-white text-black pt-32">
-      <head>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -75,7 +74,6 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
             }),
           }}
         />
-      </head>
       <Navbar forceTheme="dark" />
       
       <style dangerouslySetInnerHTML={{ __html: `
@@ -95,6 +93,8 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
           margin-bottom: 1.5em;
           color: #333;
           font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+          overflow-wrap: break-word;
+          word-break: break-word;
         }
         .case-study-content ul, .case-study-content ol {
           margin-bottom: 2em;
@@ -123,13 +123,145 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
           margin: 3rem 0;
           box-shadow: 0 20px 40px rgba(0,0,0,0.05);
         }
+
+        /* Table Styles */
+        .table-wrapper {
+          width: 100%;
+          overflow-x: auto;
+          margin: 4rem 0;
+          border-radius: 1.5rem;
+          box-shadow: 0 10px 30px rgba(0,0,0,0.02);
+          border: 1px solid rgba(0,0,0,0.05);
+        }
+        .case-study-content table {
+          border-collapse: separate;
+          border-spacing: 0;
+          width: 100%;
+          min-width: 800px; /* Force scrollable width */
+          table-layout: auto;
+          margin: 0;
+          display: table;
+        }
+        .case-study-content table td,
+        .case-study-content table th {
+          border-bottom: 1px solid rgba(0,0,0,0.05);
+          border-right: 1px solid rgba(0,0,0,0.02);
+          padding: 1.25rem 1.5rem;
+          text-align: left;
+          word-break: keep-all !important;
+          overflow-wrap: normal !important;
+          white-space: nowrap !important; /* Force single line for most stuff */
+          font-size: 1.1rem;
+        }
+        /* Allow description cell to wrap if it's long */
+        .case-study-content table td:last-child {
+          white-space: normal !important;
+          min-width: 300px;
+        }
+        .case-study-content table th {
+          background-color: #fcfcfc;
+          font-weight: 900;
+          color: #000;
+          text-transform: uppercase;
+          font-size: 0.75rem;
+          letter-spacing: 0.1em;
+          padding: 1.5rem;
+          white-space: nowrap;
+        }
+        .case-study-content table tr:last-child td {
+          border-bottom: none;
+        }
+        .case-study-content table tr:hover td {
+          background-color: rgba(0, 186, 255, 0.02);
+        }
+
+        /* Code Block Styles */
+        .case-study-content pre {
+          background: #0d0d0d !important;
+          color: #fff !important;
+          font-family: 'JetBrainsMono', monospace;
+          padding: 3rem 1.5rem 1.5rem;
+          border-radius: 1rem;
+          margin: 2rem 0;
+          position: relative;
+          box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+          overflow-x: auto;
+          white-space: pre !important; /* Force horizontal scroll if too long */
+        }
+        .case-study-content pre::before {
+          content: "";
+          position: absolute;
+          top: 1rem;
+          left: 1rem;
+          width: 12px;
+          height: 12px;
+          border-radius: 50%;
+          background: #ff5f56;
+          box-shadow: 20px 0 0 #ffbd2e, 40px 0 0 #27c93f;
+        }
+        /* Visual Merge for adjacent pre blocks */
+        .case-study-content pre + pre {
+          margin-top: -2.5rem;
+          border-top-left-radius: 0;
+          border-top-right-radius: 0;
+          padding-top: 1rem;
+        }
+        .case-study-content pre + pre::before {
+          display: none;
+        }
+
+        .case-study-content pre code {
+          color: inherit;
+          padding: 0;
+          background: none;
+          font-size: 0.95rem;
+          line-height: 1.7;
+        }
+        /* Inline Code Styles */
+        .case-study-content :not(pre) > code {
+          background: rgba(0, 0, 0, 0.05);
+          padding: 0.2em 0.4em;
+          border-radius: 0.4em;
+          font-family: monospace;
+          font-size: 0.9em;
+          color: #e11d48;
+        }
+
+        /* Highlight JS Colors - More robust selectors */
+        .case-study-content pre .hljs-comment,
+        .case-study-content pre .hljs-quote { color: #616161 !important; }
+        .case-study-content pre .hljs-variable,
+        .case-study-content pre .hljs-template-variable,
+        .case-study-content pre .hljs-attribute,
+        .case-study-content pre .hljs-tag,
+        .case-study-content pre .hljs-name,
+        .case-study-content pre .hljs-regexp,
+        .case-study-content pre .hljs-link,
+        .case-study-content pre .hljs-selector-id,
+        .case-study-content pre .hljs-selector-class { color: #f98181 !important; }
+        .case-study-content pre .hljs-number,
+        .case-study-content pre .hljs-meta,
+        .case-study-content pre .hljs-built_in,
+        .case-study-content pre .hljs-builtin-name,
+        .case-study-content pre .hljs-literal,
+        .case-study-content pre .hljs-type,
+        .case-study-content pre .hljs-params { color: #fbbc88 !important; }
+        .case-study-content pre .hljs-string,
+        .case-study-content pre .hljs-symbol,
+        .case-study-content pre .hljs-bullet { color: #b9f18d !important; }
+        .case-study-content pre .hljs-title,
+        .case-study-content pre .hljs-section { color: #faf594 !important; }
+        .case-study-content pre .hljs-keyword,
+        .case-study-content pre .hljs-selector-tag { color: #70cff8 !important; }
+        .case-study-content pre .hljs-emphasis { font-style: italic !important; }
+        .case-study-content pre .hljs-strong { font-weight: 700 !important; }
       `}} />
       
       <div className="max-w-4xl mx-auto px-6 mb-24">
         <div className="flex flex-wrap items-center justify-between gap-6 mb-12">
-          <Link href="/work" className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-black/40 hover:text-black transition-colors">
+          <a href="/work" className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-black/40 hover:text-black transition-colors">
             <ArrowLeft size={14} /> Back to Work
-          </Link>
+          </a>
 
           {study.link && (
             <a 
@@ -194,7 +326,9 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
 
         {/* Main Content */}
         <div className="case-study-content">
-          <div dangerouslySetInnerHTML={{ __html: study.content }} />
+          <div dangerouslySetInnerHTML={{ 
+            __html: study.content.replace(/<table>/g, '<div class="table-wrapper"><table>').replace(/<\/table>/g, '</table></div>') 
+          }} />
         </div>
       </div>
 

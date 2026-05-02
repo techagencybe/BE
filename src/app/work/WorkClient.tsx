@@ -93,27 +93,33 @@ export default function WorkClient({ studies }: { studies: any[] }) {
                 >
                   <div className="group flex flex-col h-full bg-white border border-black/[0.05] rounded-[32px] overflow-hidden hover:border-[#00BAFF]/40 transition-all duration-700 shadow-sm hover:shadow-xl">
                     {/* Image Section */}
-                    <a href={`/work/${study.slug}`} className="relative aspect-[16/11] overflow-hidden bg-black/5 block">
+                    <div className="relative aspect-[16/11] overflow-hidden bg-black/5 block">
                       <img 
                         src={study.image || "/work.png"} 
                         alt={study.title} 
                         className="w-full h-full object-cover opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-all duration-[2s]"
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
                       
+                      <a href={`/work/${study.slug}`} className="absolute inset-0 z-10">
+                        <span className="sr-only">View {study.title} details</span>
+                      </a>
+
                       {study.link && (
-                        <a 
-                          href={study.link}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          onClick={(e) => e.stopPropagation()}
-                          className="absolute top-4 right-4 w-10 h-10 rounded-full bg-white/90 backdrop-blur-md flex items-center justify-center text-black hover:bg-[#00BAFF] hover:text-white transition-all duration-300 shadow-lg z-20"
-                          title="Visit Live Project"
-                        >
-                          <ArrowUpRight size={18} />
-                        </a>
+                        <div className="absolute top-4 right-4 z-20">
+                          <a 
+                            href={study.link}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            onClick={(e) => e.stopPropagation()}
+                            className="w-10 h-10 rounded-full bg-white/90 backdrop-blur-md flex items-center justify-center text-black hover:bg-[#00BAFF] hover:text-white transition-all duration-300 shadow-lg"
+                            title="Visit Live Project"
+                          >
+                            <ArrowUpRight size={18} />
+                          </a>
+                        </div>
                       )}
-                    </a>
+                    </div>
 
                     {/* Content Section */}
                     <div className="p-6 lg:p-8 flex flex-col flex-1">

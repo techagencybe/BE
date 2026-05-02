@@ -9,6 +9,14 @@ import Underline from "@tiptap/extension-underline";
 import TextAlign from "@tiptap/extension-text-align";
 import Typography from "@tiptap/extension-typography";
 import Highlight from "@tiptap/extension-highlight";
+import { Table } from "@tiptap/extension-table";
+import { TableRow } from "@tiptap/extension-table-row";
+import { TableCell } from "@tiptap/extension-table-cell";
+import { TableHeader } from "@tiptap/extension-table-header";
+import { CodeBlockLowlight } from "@tiptap/extension-code-block-lowlight";
+import { all, createLowlight } from "lowlight";
+
+const lowlight = createLowlight(all);
 import {
   Bold,
   Italic,
@@ -31,7 +39,13 @@ import {
   Type,
   Maximize2,
   Settings2,
-  Info
+  Info,
+  CodeSquare,
+  Table as TableIcon,
+  Trash2,
+  Rows,
+  Columns,
+  Plus
 } from "lucide-react";
 import { useState } from "react";
 
@@ -74,7 +88,9 @@ export default function Editor({ content, onChange }: EditorProps) {
   const editor = useEditor({
     immediatelyRender: false,
     extensions: [
-      StarterKit,
+      StarterKit.configure({
+        codeBlock: false,
+      }),
       Underline,
       Typography,
       Highlight.configure({ multicolor: true }),
@@ -94,6 +110,16 @@ export default function Editor({ content, onChange }: EditorProps) {
       }),
       Placeholder.configure({
         placeholder: "Tell your story...",
+      }),
+      Table.configure({
+        resizable: true,
+      }),
+      TableRow,
+      TableHeader,
+      TableCell,
+      CodeBlockLowlight.configure({
+        lowlight,
+        defaultLanguage: 'javascript',
       }),
     ],
     content,
@@ -264,10 +290,48 @@ export default function Editor({ content, onChange }: EditorProps) {
         <ToolbarButton
           onClick={() => editor.chain().focus().toggleCode().run()}
           isActive={editor.isActive("code")}
-          title="Code"
+          title="Inline Code"
         >
           <Code size={18} />
         </ToolbarButton>
+        <ToolbarButton
+          onClick={() => editor.chain().focus().toggleCodeBlock().run()}
+          isActive={editor.isActive("codeBlock")}
+          title="Code Block"
+        >
+          <CodeSquare size={18} />
+        </ToolbarButton>
+
+        <div className="w-px h-6 bg-black/[0.08] mx-2" />
+
+        <ToolbarButton
+          onClick={() => editor.chain().focus().insertTable({ rows: 3, cols: 3, withHeaderRow: true }).run()}
+          title="Insert Table"
+        >
+          <TableIcon size={18} />
+        </ToolbarButton>
+        {editor.isActive("table") && (
+          <>
+            <ToolbarButton
+              onClick={() => editor.chain().focus().addColumnAfter().run()}
+              title="Add Column"
+            >
+              <Columns size={18} />
+            </ToolbarButton>
+            <ToolbarButton
+              onClick={() => editor.chain().focus().addRowAfter().run()}
+              title="Add Row"
+            >
+              <Rows size={18} />
+            </ToolbarButton>
+            <ToolbarButton
+              onClick={() => editor.chain().focus().deleteTable().run()}
+              title="Delete Table"
+            >
+              <Trash2 size={18} className="text-red-500" />
+            </ToolbarButton>
+          </>
+        )}
       </div>
 
       {/* Editor Content Area */}
@@ -293,6 +357,8 @@ export default function Editor({ content, onChange }: EditorProps) {
           color: #000000 !important;
           line-height: 1.8;
           font-size: 1.125rem;
+          overflow-wrap: break-word;
+          word-break: break-word;
         }
         .tiptap-editor h1 {
           font-size: 3.5rem;
@@ -363,6 +429,160 @@ export default function Editor({ content, onChange }: EditorProps) {
           color: rgba(0, 0, 0, 0.2);
           pointer-events: none;
           height: 0;
+        }
+        
+        /* Table Styles */
+        .tiptap-editor table {
+          border-collapse: separate;
+          border-spacing: 0;
+          width: 100%;
+          min-width: 600px;
+          table-layout: auto;
+          margin: 3rem 0;
+          border-radius: 1.5rem;
+          border: 1px solid rgba(0, 0, 0, 0.05);
+          box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+        }
+        .tiptap-editor table td,
+        .tiptap-editor table th {
+          min-width: 1em;
+          border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+          border-right: 1px solid rgba(0, 0, 0, 0.02);
+          padding: 1.25rem 1.5rem;
+          vertical-align: middle;
+          box-sizing: border-box;
+          position: relative;
+          word-break: normal !important;
+          overflow-wrap: normal !important;
+          white-space: normal;
+        }
+        .tiptap-editor table th {
+          font-weight: 900;
+          text-align: left;
+          background-color: #fafafa;
+          color: #000;
+          text-transform: uppercase;
+          font-size: 0.75rem;
+          letter-spacing: 0.1em;
+          white-space: nowrap;
+        }
+        .tiptap-editor table tr:last-child td {
+          border-bottom: none;
+        }
+        .tiptap-editor table tr:hover td {
+          background-color: rgba(0, 186, 255, 0.02);
+        }
+        .tiptap-editor table .selectedCell:after {
+          z-index: 2;
+          position: absolute;
+          content: "";
+          left: 0; right: 0; top: 0; bottom: 0;
+          background: rgba(200, 200, 255, 0.4);
+          pointer-events: none;
+        }
+        .tiptap-editor table .column-resize-handle {
+          position: absolute;
+          right: -2px;
+          top: 0;
+          bottom: -2px;
+          width: 4px;
+          background-color: #adf;
+          pointer-events: none;
+        }
+        .tableWrapper {
+          overflow-x: auto;
+          margin: 3rem 0;
+          border-radius: 1rem;
+          border: 1px solid rgba(0,0,0,0.05);
+        }
+
+        /* Code Block Styles */
+        .tiptap-editor pre {
+          background: #0d0d0d;
+          color: #fff;
+          font-family: 'JetBrainsMono', monospace;
+          padding: 2.5rem 1.5rem 1.5rem;
+          border-radius: 1rem;
+          margin: 1.5rem 0;
+          position: relative;
+          box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+          transition: all 0.3s ease;
+          white-space: pre-wrap;
+          word-break: break-all;
+          overflow-wrap: anywhere;
+        }
+        .tiptap-editor pre::before {
+          content: "";
+          position: absolute;
+          top: 1rem;
+          left: 1rem;
+          width: 12px;
+          height: 12px;
+          border-radius: 50%;
+          background: #ff5f56;
+          box-shadow: 20px 0 0 #ffbd2e, 40px 0 0 #27c93f;
+        }
+        /* Visual Merge for adjacent pre blocks */
+        .tiptap-editor pre + pre {
+          margin-top: -1.75rem;
+          border-top-left-radius: 0;
+          border-top-right-radius: 0;
+          padding-top: 0.5rem;
+        }
+        .tiptap-editor pre + pre::before {
+          display: none;
+        }
+        
+        .tiptap-editor pre code {
+          color: inherit;
+          padding: 0;
+          background: none;
+          font-size: 0.9rem;
+          line-height: 1.6;
+        }
+        .tiptap-editor pre .hljs-comment,
+        .tiptap-editor pre .hljs-quote {
+          color: #616161;
+        }
+        .tiptap-editor pre .hljs-variable,
+        .tiptap-editor pre .hljs-template-variable,
+        .tiptap-editor pre .hljs-attribute,
+        .tiptap-editor pre .hljs-tag,
+        .tiptap-editor pre .hljs-name,
+        .tiptap-editor pre .hljs-regexp,
+        .tiptap-editor pre .hljs-link,
+        .tiptap-editor pre .hljs-name,
+        .tiptap-editor pre .hljs-selector-id,
+        .tiptap-editor pre .hljs-selector-class {
+          color: #f98181;
+        }
+        .tiptap-editor pre .hljs-number,
+        .tiptap-editor pre .hljs-meta,
+        .tiptap-editor pre .hljs-built_in,
+        .tiptap-editor pre .hljs-builtin-name,
+        .tiptap-editor pre .hljs-literal,
+        .tiptap-editor pre .hljs-type,
+        .tiptap-editor pre .hljs-params {
+          color: #fbbc88;
+        }
+        .tiptap-editor pre .hljs-string,
+        .tiptap-editor pre .hljs-symbol,
+        .tiptap-editor pre .hljs-bullet {
+          color: #b9f18d;
+        }
+        .tiptap-editor pre .hljs-title,
+        .tiptap-editor pre .hljs-section {
+          color: #faf594;
+        }
+        .tiptap-editor pre .hljs-keyword,
+        .tiptap-editor pre .hljs-selector-tag {
+          color: #70cff8;
+        }
+        .tiptap-editor pre .hljs-emphasis {
+          font-style: italic;
+        }
+        .tiptap-editor pre .hljs-strong {
+          font-weight: 700;
         }
       `}</style>
     </div>
