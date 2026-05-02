@@ -80,7 +80,7 @@ export async function createPost(formData: FormData, content: string) {
       const uniqueEmails = Array.from(new Set(allLeads.map(l => l.email)));
       
       if (uniqueEmails.length > 0) {
-        const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "https://be-agency.com";
+        const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "https://www.techbe.online";
         const postUrl = `${baseUrl}/blog/${slug}`;
 
         await sendEmail({
