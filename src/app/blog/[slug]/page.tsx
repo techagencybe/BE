@@ -2,7 +2,8 @@ import { getPostBySlug } from "@/app/actions/blog";
 import { notFound } from "next/navigation";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "../../../components/layout/Footer";
-import { ArrowLeft, Clock, Calendar, User, Share2 } from "lucide-react";
+import { ArrowLeft, Clock, Calendar, User } from "lucide-react";
+import ShareButton from "@/components/blog/ShareButton";
 
 import { Metadata, ResolvingMetadata } from "next";
 
@@ -293,9 +294,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
               </div>
 
               <div className="flex items-center gap-3">
-                <button className="w-10 h-10 rounded-full border border-black/[0.05] flex items-center justify-center text-black/30 hover:text-black hover:border-black/20 transition-all">
-                  <Share2 size={18} />
-                </button>
+                <ShareButton title={post.title} text={post.excerpt} />
               </div>
             </div>
           </header>

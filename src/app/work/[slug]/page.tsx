@@ -2,7 +2,8 @@ import { getCaseStudyBySlug } from "@/app/actions/case-studies";
 import { notFound } from "next/navigation";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
-import { ArrowLeft, Globe, Smartphone, Bot, ArrowUpRight } from "lucide-react";
+import { ArrowLeft, Globe, Smartphone, Bot, ArrowUpRight, Share2 } from "lucide-react";
+import ShareButton from "@/components/blog/ShareButton";
 
 import { Metadata, ResolvingMetadata } from "next";
 
@@ -263,15 +264,20 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ slug
             <ArrowLeft size={14} /> Back to Work
           </a>
 
-          {study.link && (
-            <a 
-              href={study.link} 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 text-xs font-black uppercase tracking-widest bg-black text-white px-6 py-3 rounded-xl hover:bg-[#00BAFF] hover:text-white transition-all shadow-lg active:scale-95"
-            >
-              Visit Project <ArrowUpRight size={14} />
-            </a>
+          {study.link ? (
+            <div className="flex items-center gap-3">
+              <ShareButton title={study.title} text={study.desc} />
+              <a 
+                href={study.link} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 text-xs font-black uppercase tracking-widest bg-black text-white px-6 py-3 rounded-xl hover:bg-[#00BAFF] hover:text-white transition-all shadow-lg active:scale-95"
+              >
+                Visit Project <ArrowUpRight size={14} />
+              </a>
+            </div>
+          ) : (
+            <ShareButton title={study.title} text={study.desc} />
           )}
         </div>
 
